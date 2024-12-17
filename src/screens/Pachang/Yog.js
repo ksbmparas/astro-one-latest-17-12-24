@@ -103,7 +103,7 @@ const Yog = ({ locationData, dispatch, navigation, yogdata }) => {
             <Text style={{ ...Fonts.PoppinsSemiBold, color: 'white' }}>
               {key.charAt(0).toUpperCase() + key.slice(1)}:
             </Text>
-            <Text style={{ ...Fonts.PoppinsSemiBold, color: 'white' }}>
+            <Text style={{ ...Fonts.PoppinsSemiBold, color: 'red' }}>
               {value}
             </Text>
           </View>
