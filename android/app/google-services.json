@@ -1,0 +1,93 @@
+{
+  "project_info": {
+    "project_number": "602788366308",
+    "firebase_url": "https://astroone-9f4d9-default-rtdb.firebaseio.com",
+    "project_id": "astroone-9f4d9",
+    "storage_bucket": "astroone-9f4d9.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:602788366308:android:3cc744fb47984c205b69f1",
+        "android_client_info": {
+          "package_name": "com.ksbm.astroone"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "602788366308-gkpvi1m8o8de0r5otgm5tletqbb3mffb.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.ksbm.astroone",
+            "certificate_hash": "7d2170896cc685761c09a75c0dfde92f0de145ab"
+          }
+        },
+        {
+          "client_id": "602788366308-gvqrtn4rvm1jcel00p4rpfu1i7r141h0.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.ksbm.astroone",
+            "certificate_hash": "da7edd7d87adf152c05ccc658c735f6fa6282fe5"
+          }
+        },
+        {
+          "client_id": "602788366308-m4jtc32sufah39vmb2794bsb927bcqpb.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.ksbm.astroone",
+            "certificate_hash": "9b0c2c545155efd80d01985da6ccd41ebdd2da1d"
+          }
+        },
+        {
+          "client_id": "602788366308-istrcq948d8gvhkb2lclguvv3o65nfrl.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBTfKjR_gGJAxdju5DuDMnj55os1rlLk2w"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "602788366308-istrcq948d8gvhkb2lclguvv3o65nfrl.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:602788366308:android:4e37c5f84bf8e6c75b69f1",
+        "android_client_info": {
+          "package_name": "com.ksbm.astroone_astro"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "602788366308-istrcq948d8gvhkb2lclguvv3o65nfrl.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBTfKjR_gGJAxdju5DuDMnj55os1rlLk2w"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "602788366308-istrcq948d8gvhkb2lclguvv3o65nfrl.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
