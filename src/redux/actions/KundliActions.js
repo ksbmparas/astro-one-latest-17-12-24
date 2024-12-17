@@ -312,6 +312,11 @@ export const setDeleteNumerology = payload => ({
     payload
 })
 
+export const getYog = payload => ({
+    type : actionTypes.GET_YOG_DATA,
+    payload
+})
+
 
 
 

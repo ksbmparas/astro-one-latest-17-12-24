@@ -39,7 +39,7 @@ const initialState = {
     Navamanshachart: null,
     openNumerologyData: null,
     deleteNumerologyData: null,
-
+    yogdata:null,
 }
 
 const kundli = (state = initialState, actions) => {
@@ -244,6 +244,11 @@ const kundli = (state = initialState, actions) => {
             return {
                 ...state,
                 deleteNumerologyData: payload
+            }
+            case actionTypes.SET_YOG_DATA:
+            return{
+                ...state,
+                yogdata:payload
             }
 
         case actionTypes: SET_NUMERO_REPORT

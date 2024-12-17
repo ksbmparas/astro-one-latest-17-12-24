@@ -91,7 +91,7 @@ const Home = ({
   const [masterDataSource, setMasterDataSource] = useState([]);
   const [male, setMale] = useState(true);
   const [female, setFemale] = useState(false);
-   const [loading, setLoading] = useState(true);   
+  const [loading, setLoading] = useState(true);
 
   const { t } = useTranslation();
 
@@ -2643,7 +2643,7 @@ const Home = ({
                   styles.AuspiciousCommanText,
                   { color: colors.black_color },
                 ]}>
-               {getabhijitdata?.abhijitmuhuratstart} - {getabhijitdata?.abhijitmuhuratend}
+                {getabhijitdata?.abhijitmuhuratstart} - {getabhijitdata?.abhijitmuhuratend}
               </Text>
             </View>
             <View
@@ -2678,7 +2678,7 @@ const Home = ({
                   styles.AuspiciousCommanText,
                   { color: colors.black_color },
                 ]}>
-                 {getgulikdata?.gulikkaalstart} - {getgulikdata?.gulikkaalend}
+                {getgulikdata?.gulikkaalstart} - {getgulikdata?.gulikkaalend}
               </Text>
             </View>
             <View
@@ -2687,7 +2687,7 @@ const Home = ({
                 { backgroundColor: '#6D88D5' },
               ]}>
               <Text style={[styles.AuspiciousCommanText, { color: '#0849F1' }]}>
-              Yamghantak
+                Yamghantak
               </Text>
               <Text
                 style={[

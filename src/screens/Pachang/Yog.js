@@ -1,228 +1,169 @@
 import { ImageBackground, StyleSheet, Text, View, TouchableOpacity, FlatList, ScrollView } from 'react-native';
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { SCREEN_HEIGHT, SCREEN_WIDTH } from '../../config/Screen';
 import { colors } from '../../config/Constants1';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import DateTimePicker from '@react-native-community/datetimepicker';
+import * as SettingActions from '../../redux/actions/SettingActions';
+import * as KundliActions from '../../redux/actions/KundliActions'
+import { connect } from 'react-redux';
+import { Fonts, Sizes } from '../../assets/style';
 
-const Yog = () => {
+const Yog = ({ locationData, dispatch, navigation, yogdata }) => {
   const [buttonStatus, setButtonStatus] = useState(0);
-    const [show, setShow] = useState(false);
-      const [date, setDate] = useState(new Date());
-  const onPress = () => {
-    setShow(true);
-  };
+  const [show, setShow] = useState(false);
+  const [date, setDate] = useState(new Date());
+  const [dobVisible, setDobVisible] = useState(false);
+  const [dob, setDob] = useState(null);
+  const [selectedOption, setSelectedOption] = useState(null);
 
-  const onChange = (event, selectedDate) => {
-    const currentDate = selectedDate || date;
-    setShow(Platform.OS === 'ios');
-    setDate(currentDate);
-  };
-  const Data = [
-    { id: "1", name: 'Yog', start: 'AMRITSIDHHI',  },
-    { id: "2", name: 'Subh', start: '8:20',  },
-    { id: "3", name: 'Rog', start: '7:27',  },
-    { id: "4", name: 'Udveg', start: '8:20', },
-    { id: "4", name: 'Char', start: '4:20',  },
-  
-  ];
+  useEffect(() => {
+    dispatch(KundliActions.getYog())
+  }, [dispatch]);
 
-  const Data2 = [
-    { id: "1", name: 'yog', start: 'SARVATHSIDHHI', end: '8:20' },
-    { id: "2", name: 'Subh', start: '8:20', end: '2:20' },
-    { id: "3", name: 'Rog', start: '7:27', end: '4:20' },
-    { id: "4", name: 'Udveg', start: '8:20', end: '8:20' },
-    { id: "4", name: 'Char', start: '4:20', end: '6:20' },
-    { id: "5", name: 'Labh', start: '7:20', end: '8:20' },
-    { id: "6",name: 'Amrit', start: '7:20', end: '5:20' },
-    { id: "7", name: 'Kaal', start: '7:20', end: '8:20' },
-  ];
+  console.log('getYogData:::KKK', yogdata)
 
-  const Data3 = [
-    { id: "1", name: 'yog', start: 'GURUPUSHYA', end: '7:20' },
-    { id: "2",name: 'Subh', start: '7:20', end: '1:20' },
-    { id: "3", name: 'Rog', start: '6:27', end: '3:20' },
-    { id: "4", name: 'Udveg', start: '7:20', end: '7:20' },
-    { id: "5", name: 'Labh', start: '6:20', end: '7:20' },
-  ];
-
-  const Data4 = [
-    { id: "1", name: 'yog', start: 'RAVIPUSHYA', end: '8:20' },
-    { id: "2", name: 'Amrit', start: '7:30', end: '5:20' },
-    { id: "3",  name: 'Kaal', start: '8:20', end: '9:20' },
-    { id: "4",  name: 'Udveg', start: '7:20', end: '7:20' },
-    { id: "5", name: 'Char', start: '5:20', end: '6:20' },
-  ];
-
-  
-  const getDataForCurrentStatus = () => {
-    switch (buttonStatus) {
-      case 0:
-        return Data;
-      case 1:
-        return Data2;
-      case 2:
-        return  Data3;
-      case 3:
-        return  Data4;
-      default:
-        return Data;
+  const date_handle = (event, selectedDate) => {
+    if (event.type === "set") {
+      const newDate = selectedDate || date;
+      setDob(newDate);
+      setShow(false);
+      handleFetchKundli(selectedOption, newDate);
+    } else {
+      setShow(false);
     }
   };
 
-  const renderItem = ({ item }) => (
-    <View style={{ flexDirection: "row", justifyContent: "space-between", alignItems: "center", paddingVertical: SCREEN_HEIGHT * 0.02,borderBottomWidth:1,borderBottomColor:colors.black_color9, borderColor: colors.background_theme2,paddingHorizontal:SCREEN_WIDTH*0.1}}>
-      <Text style={{ color: colors.white_color, fontSize: 13, fontWeight: "500" }}>{item.name}</Text>
-      <Text style={{ color: colors.white_color, fontSize: 13, fontWeight: "500" }}>{item.start}</Text>
- 
-    </View>
+  const handleYogSelection = (yog, status) => {
+    setSelectedOption(yog);
+    setButtonStatus(status);
+    if (dob) {
+      handleFetchKundli(yog, dob);
+    }
+  };
+
+  const handleFetchKundli = (yog, selectedDate) => {
+    if (!yog) {
+      console.warn("Please select Yog");
+      return;
+    }
+
+    const month = selectedDate ? selectedDate.getMonth() + 1 : null;
+    const year = selectedDate ? selectedDate.getFullYear() : null;
+
+    if (!month || month < 1 || month > 12) {
+      console.warn("Please select a valid date");
+      return;
+    }
+    if (!year || year < 1900 || year > new Date().getFullYear()) {
+      console.warn("Please select a valid date");
+      return;
+    }
+
+    const payload = {
+      yog: yog,
+      month: selectedDate ? selectedDate.getMonth() + 1 : null,
+      year: selectedDate ? selectedDate.getFullYear() : null,
+      lat: 25.15,
+      lon: 82.5,
+      tz: 5.5,
+      userid: 'tathastujy',
+      authcode: '86ce34784bfc07a39392bf690995ef33',
+    };
+
+    console.log("Sending payload:", payload);
+    dispatch(KundliActions.getYog(payload));
+  };
+
+  const renderButton = (text, yog, status) => (
+    <TouchableOpacity
+      onPress={() => handleYogSelection(yog, status)}
+      style={{
+        width: SCREEN_WIDTH * 0.4,
+        height: SCREEN_HEIGHT * 0.06,
+        borderRadius: 10,
+        alignItems: "center",
+        justifyContent: "center",
+        backgroundColor: buttonStatus === status ? colors.background_theme2 : colors.background_theme1,
+      }}
+    >
+      <Text style={{
+        fontSize: 14,
+        fontWeight: "500",
+        color: buttonStatus === status ? colors.white_color : colors.background_theme2,
+      }}>{text}</Text>
+    </TouchableOpacity>
   );
+
+  const renderItem = ({ item }) => {
+    return (
+      <View style={{ paddingVertical: SCREEN_HEIGHT * 0.02, paddingHorizontal: SCREEN_WIDTH * 0.02,borderWidth:1,marginHorizontal:Sizes.fixPadding }}>
+        {Object.entries(item).map(([key, value], i) => (
+          <View key={i} style={{ flexDirection: "row", justifyContent: "space-between", marginVertical: 4, }}>
+            <Text style={{ ...Fonts.PoppinsSemiBold, color: 'white' }}>
+              {key.charAt(0).toUpperCase() + key.slice(1)}:
+            </Text>
+            <Text style={{ ...Fonts.PoppinsSemiBold, color: 'white' }}>
+              {value}
+            </Text>
+          </View>
+        ))}
+      </View>
+    );
+  };
+
   return (
     <ImageBackground
       source={require('../../assets/images/BG45.png')}
-      style={{ flex: 1, }}>
+      style={{ flex: 1 }}>
       <ImageBackground
         style={{ flex: 1 }}
         source={require('../../assets/images/BG120.png')}>
 
-
-
-        {buttons()}
-
-
-
-      </ImageBackground>
-
-    </ImageBackground>
-  )
-  function buttons() {
-    return (
-      <View>
         <ScrollView
-
-          style={{ height: SCREEN_HEIGHT * 0.1 }}
+          style={{ height: SCREEN_HEIGHT * 0.1, }}
           showsHorizontalScrollIndicator={false}
           horizontal={true}>
-
-          <View style={{ flexDirection: 'row', justifyContent: "space-between", alignItems: "center", gap: 10 ,paddingHorizontal:SCREEN_WIDTH*0.015}}>
-
-
-            <TouchableOpacity onPress={onPress}>
+          <View style={{ flexDirection: 'row', gap: 10, paddingHorizontal: SCREEN_WIDTH * 0.015, alignItems: 'center' }}>
+            <TouchableOpacity onPress={() => setShow(true)}>
               <MaterialIcons name="date-range" size={25} color={"white"} />
             </TouchableOpacity>
 
-
-
-            {show && (
-              <DateTimePicker
-                value={date}
-                mode="date"
-                is24Hour={true}
-                display="default"
-                onChange={onChange}
-              />
-            )}
-
-
-            <TouchableOpacity
-              onPress={() => setButtonStatus(0)}
-              style={{
-
-                width: SCREEN_WIDTH * 0.4,
-                height: SCREEN_HEIGHT * 0.06,
-                borderRadius: 10,
-
-                alignItems: "center",
-                justifyContent: "center",
-                backgroundColor: buttonStatus === 0 ? colors.background_theme2 : colors.background_theme1,
-              }}
-            >
-              <Text style={{
-                fontSize: 14,
-                fontWeight: "500",
-                color: buttonStatus === 0 ? colors.white_color : colors.background_theme2,
-              }}>AMRITSIDHHI</Text>
-            </TouchableOpacity>
-
-
-            <TouchableOpacity
-              onPress={() => setButtonStatus(1)}
-              style={{
-
-                width: SCREEN_WIDTH * 0.4,
-                height: SCREEN_HEIGHT * 0.06,
-                borderRadius: 10,
-                alignItems: "center",
-                justifyContent: "center",
-                backgroundColor: buttonStatus === 1 ? colors.background_theme2 : colors.background_theme1,
-              }}
-            >
-              <Text style={{
-                fontSize: 14,
-                fontWeight: "500",
-                color: buttonStatus === 1 ? colors.white_color : colors.background_theme2,
-              }}>SARVATHSIDHHI</Text>
-            </TouchableOpacity>
-
-            <TouchableOpacity
-              onPress={() => setButtonStatus(2)}
-              style={{
-
-                width: SCREEN_WIDTH * 0.4,
-                height: SCREEN_HEIGHT * 0.06,
-                borderRadius: 10,
-                alignItems: "center",
-                justifyContent: "center",
-                backgroundColor: buttonStatus === 2 ? colors.background_theme2 : colors.background_theme1,
-              }}
-            >
-              <Text style={{
-                fontSize: 14,
-                fontWeight: "500",
-                color: buttonStatus === 2 ? colors.white_color : colors.background_theme2,
-              }}>GURUPUSHYA</Text>
-            </TouchableOpacity>
-
-
-            <TouchableOpacity
-              onPress={() => setButtonStatus(3)}
-              style={{
-
-                width: SCREEN_WIDTH * 0.4,
-                height: SCREEN_HEIGHT * 0.06,
-                borderRadius: 10,
-                alignItems: "center",
-                justifyContent: "center",
-                backgroundColor: buttonStatus === 3 ? colors.background_theme2 : colors.background_theme1,
-              }}
-            >
-              <Text style={{
-                fontSize: 14,
-                fontWeight: "500",
-                color: buttonStatus === 3 ? colors.white_color : colors.background_theme2,
-              }}>RAVIPUSHYA</Text>
-            </TouchableOpacity>
+            {renderButton('AMRITSIDHHI', 'amritsiddhi', 0)}
+            {renderButton('SARVATHSIDHHI', 'sarvarthsiddhi', 1)}
+            {renderButton('GURUPUSHYA', 'gurupushya', 2)}
+            {renderButton('RAVIPUSHYA', 'ravipushya', 3)}
           </View>
         </ScrollView>
 
-       <View style={{flexDirection:"row",alignItems:"center",justifyContent:"space-between",paddingHorizontal:SCREEN_WIDTH*0.1,paddingVertical:SCREEN_HEIGHT*0.02,borderBottomWidth:1,borderBottomColor:colors.background_theme2}}>
-          <Text style={{fontSize:15,color:colors.white_color,fontWeight:"500"}}>Day</Text>
-          <Text style={{fontSize:15,color:colors.white_color,fontWeight:"500"}}>Sunday</Text>
-         
-        </View>
-
+        {show && (
+          <DateTimePicker
+            value={date}
+            mode="date"
+            is24Hour={true}
+            display="default"
+            onChange={date_handle}
+          />
+        )}
 
         <FlatList
-          data={getDataForCurrentStatus()}
+          data={yogdata}
           renderItem={renderItem}
           keyExtractor={(item) => item.id}
         />
+      </ImageBackground>
+    </ImageBackground>
+  );
+};
 
-      </View>
-    )
-  }
-}
+const mapStateToProps = (state) => ({
+  customerData: state.customer.customerData,
+  wallet: state.customer.wallet,
+  locationData: state.setting.locationData,
+  isLoading: state.setting.isLoading,
+  yogdata: state.kundli.yogdata
+});
 
-export default Yog
+const mapDispatchToProps = (dispatch) => ({ dispatch });
 
-const styles = StyleSheet.create({})
+export default connect(mapStateToProps, mapDispatchToProps)(Yog);

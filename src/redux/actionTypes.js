@@ -317,3 +317,8 @@ export const GET_YAM_MUHURAT = 'GET_YAM_MUHURAT'
 export const SET_YAM_MUHURAT = 'SET_YAM_MUHURAT'
 
 
+export const GET_YOG_DATA = 'GET_YOG_DATA'
+export const SET_YOG_DATA = 'SET_YOG_DATA'
+
+
+

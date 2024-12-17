@@ -5,6 +5,8 @@ import { add_kundli, api_url, delete_kundli, delete_numerology, get_customer_kun
 import { showToastMessage } from '../../utils/services'
 import { navigate, replace } from '../../navigations/NavigationServices'
 import moment from 'moment'
+import axios from 'axios'
+import Yog from '../../screens/Pachang/Yog'
 
 function* createKundli(actions) {
     try {
@@ -1420,6 +1422,51 @@ function* getDeleteNumerology(actions) {
     }
 }
 
+function* getYogdata(actions) {
+    try {
+        const { payload } = actions;
+        yield put({ type: actionTypes.SET_IS_LOADING, payload: true });
+        console.log(payload, 'payloadata:::KKK')
+
+        const data = {
+            yog: payload?.yog,
+            month: payload?.month,
+            year: payload?.year,
+            lat: +25.15,
+            lon: +82.50,
+            tz: 5.5,
+            userid: 'tathastujy',
+            authcode: '86ce34784bfc07a39392bf690995ef33'
+        };
+
+
+
+
+
+
+        const header = {
+            "Content-Type": "multipart/form-data"
+        };
+
+        const response = yield axios.post('https://api.kundli.click/cust_tathastujy_v0.4/yog',
+            data,
+            { headers: header }
+        );
+
+        console.log('Yog data KKK:::', response?.data);
+
+        if (response.data) {
+            yield put({ type: actionTypes.SET_YOG_DATA, payload: response?.data });
+            // navigate('yogdata')
+        }
+
+        yield put({ type: actionTypes.SET_IS_LOADING, payload: false });
+    } catch (e) {
+        console.log(e);
+        yield put({ type: actionTypes.SET_IS_LOADING, payload: false });
+    }
+}
+
 export default function* kundliSaga() {
     yield takeLeading(actionTypes.CREATE_KUNDLI, createKundli)
     yield takeLeading(actionTypes.GET_ALL_KUNDLI, getAllKundli)
@@ -1455,6 +1502,7 @@ export default function* kundliSaga() {
     yield takeLeading(actionTypes.GET_KUNDLI_D9_CHARTS, getNavmashaChart);
     yield takeLeading(actionTypes.GET_OPEN_NUMEROLOGY, getOpenNumerology);
     yield takeLeading(actionTypes.GET_DELETE_NUMEROLOGY, getDeleteNumerology);
+    yield takeLeading(actionTypes.GET_YOG_DATA, getYogdata)
 
 
 }
