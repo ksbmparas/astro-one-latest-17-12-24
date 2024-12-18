@@ -141,6 +141,7 @@ const Chogadiya = () => {
             
           </View>
         </View>
+           
         {buttonStatus ? (
           <View style={{ height: "100%", width: '100%', paddingBottom: SCREEN_HEIGHT * 0.1 }}>
             <View style={{ paddingBottom: SCREEN_HEIGHT * 0.03, flexDirection: "row", alignItems: "center", justifyContent: "space-between", paddingRight: SCREEN_WIDTH * 0.03 }}>

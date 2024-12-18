@@ -303,7 +303,7 @@ const Panchangscreen = () => {
                     </View>
                 ) : (
                     <View
-                        style={{ flex: 1, paddingVertical: SCREEN_HEIGHT * 0.01 ,paddingBottom:SCREEN_HEIGHT*0.1}}>
+                        style={{ flex: 1, paddingVertical: SCREEN_HEIGHT * 0.01, paddingBottom: SCREEN_HEIGHT * 0.1 }}>
 
                         <View style={{ gap: 10, paddingVertical: SCREEN_HEIGHT * 0.025, backgroundColor: colors.background_theme2, }}>
 

@@ -7,6 +7,7 @@ import { navigate, replace } from '../../navigations/NavigationServices'
 import moment from 'moment'
 import axios from 'axios'
 import Yog from '../../screens/Pachang/Yog'
+import { getPanchangdata } from '../actions/KundliActions'
 
 function* createKundli(actions) {
     try {
@@ -1422,6 +1423,9 @@ function* getDeleteNumerology(actions) {
     }
 }
 
+
+
+
 function* getYogdata(actions) {
     try {
         const { payload } = actions;
@@ -1467,6 +1471,139 @@ function* getYogdata(actions) {
     }
 }
 
+
+
+function* getPachangData(actions) {
+    try {
+        const { payload } = actions;
+        yield put({ type: actionTypes.SET_IS_LOADING, payload: true });
+
+        console.log(payload, "Panchang payload::::")
+
+        const data = {
+            d: payload?.d,
+            t: payload?.t,
+            lat: payload?.lat,
+            lon: payload?.lon,
+            tz: 5.5,
+            userid: 'tathastujy',
+            authcode: '86ce34784bfc07a39392bf690995ef33'
+        };
+
+
+        const header = {
+            "Content-Type": "multipart/form-data"
+        };
+
+        const response = yield axios.post('https://api.kundli.click/cust_tathastujy_v0.4/panchang',
+            data,
+            { headers: header }
+        );
+
+        console.log('pachang data ::::', response?.data);
+
+        if (response.data) {
+            yield put({ type: actionTypes.SET_PANCHANG_DATA, payload: response?.data?.panchang });
+            navigate('panchdata')
+        }
+
+        yield put({ type: actionTypes.SET_IS_LOADING, payload: false });
+    } catch (e) {
+        console.log(e);
+        yield put({ type: actionTypes.SET_IS_LOADING, payload: false });
+    }
+}
+
+
+function* getMuhuratData(actions) {
+    try {
+        const { payload } = actions;
+        yield put({ type: actionTypes.SET_IS_LOADING, payload: true });
+
+        console.log(payload, 'muhurat payload::::')
+        const data = {
+            muhurat: payload?.muhurat,
+            month: payload?.month,
+            year: payload?.year,
+            lat: +25.15,
+            lon: +82.50,
+            tz: 5.5,
+            userid: 'tathastujy',
+            authcode: '86ce34784bfc07a39392bf690995ef33'
+        };
+
+
+        const header = {
+            "Content-Type": "multipart/form-data"
+        };
+
+        const response = yield axios.post('https://api.kundli.click/cust_tathastujy_v0.4/muhurat',
+            data,
+            { headers: header }
+        );
+
+        // console.log('pachang data ::::', response?.data);
+
+        if (response.data) {
+            yield put({ type: actionTypes.SET_MUHURAT_DATA, payload: response?.data });
+            // navigate('muhurat');
+
+        }
+
+        yield put({ type: actionTypes.SET_IS_LOADING, payload: false });
+    } catch (e) {
+        console.log(e);
+        yield put({ type: actionTypes.SET_IS_LOADING, payload: false });
+    }
+}
+
+function* getChogadiyaData(actions) {
+    try {
+        const { payload } = actions;
+        yield put({ type: actionTypes.SET_IS_LOADING, payload: true });
+
+        console.log(payload, 'muhurat payload::::')
+        const data = {
+            // muhurat: payload?.muhurat,
+            month: payload?.month,
+            year: payload?.year,
+            lat: +25.15,
+            lon: +82.50,
+            tz: 5.5,
+            userid: 'tathastujy',
+            authcode: '86ce34784bfc07a39392bf690995ef33'
+        };
+
+
+        const header = {
+            "Content-Type": "multipart/form-data"
+        };
+
+        const response = yield axios.post('https://api.kundli.click/cust_tathastujy_v0.4/choghadiya',
+            data,
+            { headers: header }
+        );
+
+        // console.log('pachang data ::::', response?.data);
+
+        if (response.data) {
+            yield put({ type: actionTypes.SET_CHOGADIYA_DATA, payload: response?.data });
+            // navigate('muhurat');
+
+        }
+
+        yield put({ type: actionTypes.SET_IS_LOADING, payload: false });
+    } catch (e) {
+        console.log(e);
+        yield put({ type: actionTypes.SET_IS_LOADING, payload: false });
+    }
+}
+
+
+
+
+
+
 export default function* kundliSaga() {
     yield takeLeading(actionTypes.CREATE_KUNDLI, createKundli)
     yield takeLeading(actionTypes.GET_ALL_KUNDLI, getAllKundli)
@@ -1503,6 +1640,10 @@ export default function* kundliSaga() {
     yield takeLeading(actionTypes.GET_OPEN_NUMEROLOGY, getOpenNumerology);
     yield takeLeading(actionTypes.GET_DELETE_NUMEROLOGY, getDeleteNumerology);
     yield takeLeading(actionTypes.GET_YOG_DATA, getYogdata)
+    yield takeLeading(actionTypes.GET_PANCHANG_DATA, getPachangData)
+    yield takeLeading(actionTypes.GET_MUHURAT_DATA, getMuhuratData)
+    yield takeLeading(actionTypes.GET_CHOGADIYA_DATA, getChogadiyaData)
+
 
 
 }

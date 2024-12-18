@@ -54,11 +54,11 @@ export const getKundliChartData = payload => ({
     type: actionTypes.GET_KUNDLI_CHART_DATA,
     payload
 })
-export const getKundliChartimage =payload => ({
+export const getKundliChartimage = payload => ({
     type: actionTypes.GET_KUNDLI_CHARTS_IMAGE,
     payload
 })
-export const setKundliChartimage =payload => ({
+export const setKundliChartimage = payload => ({
     type: actionTypes.SET_KUNDLI_CHARTS_IMAGE,
     payload
 })
@@ -196,42 +196,42 @@ export const setKundliMatchingAshtakootPoints = payload => ({
     type: actionTypes.SET_KUNDLI_MATCHING_ASHTAKOOT_POINTS,
     payload
 })
- export const getMatchBasicAstro = payload => ({
+export const getMatchBasicAstro = payload => ({
     type: actionTypes.GET_BASIC_ASTRO_POINTS,
     payload
- })
- export const setMatchBasicAstro = paylod => ({
+})
+export const setMatchBasicAstro = paylod => ({
     type: actionTypes.SET_BASIC_ASTRO_POINTS,
     paylod
- })
+})
 
- //////
- export const getDaskootapoint = payload => ({
+//////
+export const getDaskootapoint = payload => ({
     type: actionTypes.GET_KUNDLI_MATCHING_DSHKOOT_POINTS,
     payload
- })
- export const setDaskootapoint = payload => ({
+})
+export const setDaskootapoint = payload => ({
     type: actionTypes.SET_KUNDLI_MATCHING_DSHKOOT_POINTS,
     payload
- })
+})
 
- export const getMatchConclusionpoint = payload => ({
+export const getMatchConclusionpoint = payload => ({
     type: actionTypes.GET_KUNDLI_MATCHING_CONCLUSION_POINTS,
     payload
- })
+})
 
- export const setMatchConclusionpoint = payload => ({
+export const setMatchConclusionpoint = payload => ({
     type: actionTypes.SET_KUNDLI_MATCHING_CONCLUSION_POINTS,
     payload
- })
- export const getMatchReport = payload => ({
+})
+export const getMatchReport = payload => ({
     type: actionTypes.GET_KUNDLI_MATCHING_REPORT_POINTS,
     payload
- })
- export const setMatchReport = payload => ({
+})
+export const setMatchReport = payload => ({
     type: actionTypes.SET_KUNDLI_MATCHING_REPORT_POINTS,
     payload
- })
+})
 
 ///
 export const viewKundliFromKundliMatching = payload => ({
@@ -275,7 +275,7 @@ export const setMatchAscedentReport = payload => ({
     type: actionTypes.SET_ASCEDENT_MATCHING_REPORTS,
     payload
 })
- 
+
 export const getbasicpanchange = payload => ({
     type: actionTypes.GET_BASIC_PANCHANGE,
     payload
@@ -287,35 +287,54 @@ export const getnumero = payload => ({
 })
 
 export const getSaptmashaChart = payload => ({
-    type : actionTypes.GET_KUNDLI_D7_CHARTS,
+    type: actionTypes.GET_KUNDLI_D7_CHARTS,
     payload
 })
 
 export const getNavmashaChart = payload => ({
-    type : actionTypes.GET_KUNDLI_D9_CHARTS,
+    type: actionTypes.GET_KUNDLI_D9_CHARTS,
     payload
 })
 export const getOpenNumerology = payload => ({
-    type : actionTypes.GET_OPEN_NUMEROLOGY,
+    type: actionTypes.GET_OPEN_NUMEROLOGY,
     payload
 })
 export const setOpenNumerology = payload => ({
-    type : actionTypes.SET_OPEN_NUMEROLOGY,
+    type: actionTypes.SET_OPEN_NUMEROLOGY,
     payload
 })
 export const getDeleteNumerology = payload => ({
-    type : actionTypes.GET_DELETE_NUMEROLOGY,
+    type: actionTypes.GET_DELETE_NUMEROLOGY,
     payload
 })
 export const setDeleteNumerology = payload => ({
-    type : actionTypes.SET_DELETE_NUMEROLOGY,
+    type: actionTypes.SET_DELETE_NUMEROLOGY,
     payload
 })
 
 export const getYog = payload => ({
-    type : actionTypes.GET_YOG_DATA,
+    type: actionTypes.GET_YOG_DATA,
     payload
 })
+
+
+
+export const getPanchangdata = payload => ({
+    type: actionTypes.GET_PANCHANG_DATA,
+    payload
+})
+
+
+export const getMuhurat = payload => ({
+    type: actionTypes.GET_MUHURAT_DATA,
+    payload
+})
+
+export const getChogadiyadata = payload => ({
+    type: actionTypes.GET_CHOGADIYA_DATA,
+    payload
+})
+
 
 
 

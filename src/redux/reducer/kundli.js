@@ -39,7 +39,10 @@ const initialState = {
     Navamanshachart: null,
     openNumerologyData: null,
     deleteNumerologyData: null,
-    yogdata:null,
+    yogdata: null,
+    panchangData: null,
+    muhuratData: null,
+    chogadiyaData: null,
 }
 
 const kundli = (state = initialState, actions) => {
@@ -79,7 +82,7 @@ const kundli = (state = initialState, actions) => {
                 birthDetailsData: payload
             }
         case actionTypes.SET_KUNDLI_CHARTS_IMAGE:
-            return{
+            return {
                 ...state,
                 chartImage: payload
             }
@@ -233,22 +236,41 @@ const kundli = (state = initialState, actions) => {
                 ...state,
                 Navamanshachart: payload
             }
-            case actionTypes.SET_OPEN_NUMEROLOGY:
+        case actionTypes.SET_OPEN_NUMEROLOGY:
 
             return {
                 ...state,
                 openNumerologyData: payload
             }
-            case actionTypes.SET_DELETE_NUMEROLOGY:
+        case actionTypes.SET_DELETE_NUMEROLOGY:
 
             return {
                 ...state,
                 deleteNumerologyData: payload
             }
-            case actionTypes.SET_YOG_DATA:
-            return{
+        case actionTypes.SET_YOG_DATA:
+            return {
                 ...state,
-                yogdata:payload
+                yogdata: payload
+            }
+
+
+        case actionTypes.SET_PANCHANG_DATA:
+            return {
+                ...state,
+                panchangData: payload
+            }
+
+        case actionTypes.SET_MUHURAT_DATA:
+            return {
+                ...state,
+                muhuratData: payload
+            }
+
+        case actionTypes.SET_CHOGADIYA_DATA:
+            return {
+                ...state,
+                chogadiyaData: payload
             }
 
         case actionTypes: SET_NUMERO_REPORT
