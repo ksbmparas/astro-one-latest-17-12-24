@@ -224,9 +224,10 @@ const Login = props => {
               <Text style={{color:"#D56A14",textTransform:"capitalize",fontSize:13,fontWeight:"500",marginVertical:10,}}>If you have any referral code, please enter</Text>
               <TextInput
                 placeholder="Enter Referral Code"
-                style={{ backgroundColor: "lightgrey", borderRadius: 10, paddingLeft: 10, }}
+                style={{ backgroundColor: "lightgrey", borderRadius: 10, paddingLeft: 10,color:"#000" }}
                 value={referralCode}
                 onChangeText={(e) => setReferralCode(e)}
+                placeholderTextColor={"#000"}
               />
             </View>
             <TouchableOpacity
@@ -384,18 +385,19 @@ const Login = props => {
 
         <View>
           <CountryPicker
-            visible={countryModalOpen}
-            withFlag
-            withCallingCode
-            withFilter
-            withCountryNameButton={false}
-            onSelect={handleSelectCountry}
-            onClose={() => setCountryModalOpen(false)}
-            modalProps={{
-              style: { ...styles.modalContainer },
-              headerStyle: styles.modalHeader,
-              headerTextStyle: styles.modalHeaderText,
-            }}
+           visible={countryModalOpen}
+           withFlag
+           withCallingCode
+           withFilter
+           withCountryNameButton={false}
+           renderFlagButton={() => <View />} // Empty view, so no button or label is shown
+           onSelect={handleSelectCountry}
+           onClose={() => setCountryModalOpen(false)}
+           modalProps={{
+             style: { ...styles.modalContainer },
+             headerStyle: styles.modalHeader,
+             headerTextStyle: styles.modalHeaderText,
+           }}
           />
 
         </View>
