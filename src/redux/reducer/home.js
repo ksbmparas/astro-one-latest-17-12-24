@@ -16,6 +16,11 @@ const initialState = {
     getgulikdata:null,
     getyamgantakdata: null,
     liveTempleData: null,
+    ajkapradhandata: null,
+    mudradata: null,
+    getlotamudra: null,
+    getbaghwandata:null,
+    getcategorydata:null,
 };
 
 const home = (state = initialState, action) => {
@@ -97,6 +102,31 @@ const home = (state = initialState, action) => {
                 ...state,
                 liveTempleData: payload,
             }
+                case actionTypes.SET_PRADHAN_DATA:
+                    return {
+                        ...state,
+                        ajkapradhandata: payload,
+                    };
+                case actionTypes.SET_MUDRA_DATA:
+                    return {
+                        ...state,
+                        mudradata: payload,
+                    };
+                case actionTypes.SET_LOTA_MUDRA_DATA:
+                    return {
+                        ...state,
+                        getlotamudra: payload,
+                    };
+                case actionTypes.SET_BAGHWAN_DATA:
+                    return {
+                        ...state,
+                        getbaghwandata: payload,
+                    };
+                    case actionTypes.SET_POOJA_CATEGORY:
+                        return {
+                            ...state,
+                            getcategorydata: payload,
+                        };
 
         default:
             return state;

@@ -121,5 +121,73 @@ export const setLiveTempleData = payload =>({
 })
 
 
+// Aj ka pradhan
+export const getAjKaPradhan = payload => {
+    console.log("getAjKaPradhan payload:", payload); // Logs the payload
+    return {
+        type: actionTypes.GET_PRADHAN_DATA,
+        payload,
+    };
+};
+
+export const setAjKaPradhan = payload => {
+    console.log("setAjKaPradhan payload:", payload); // Logs the payload
+    return {
+        type: actionTypes.SET_PRADHAN_DATA,
+        payload,
+    };
+};
+export const getAllMudra = payload => {
+    return {
+        type: actionTypes.GET_MUDRA_DATA,
+        payload,
+    };
+};
+
+export const setAllMudra = payload => {
+    return {
+        type: actionTypes.SET_MUDRA_DATA,
+        payload,
+    };
+};
+
+
+export const getLotaMudra = payload => {
+    return {
+        type: actionTypes.GET_LOTA_MUDRA_DATA,
+        payload,
+    };
+};
+
+export const setLotaMudra = payload => {
+    return {
+        type: actionTypes.SET_LOTA_MUDRA_DATA,
+        payload,
+    };
+};
+
+
+export const getBaghwanData = payload => {
+    return {
+        type: actionTypes.GET_BAGHWAN_DATA,
+        payload,
+    };
+};
+export const setBaghwanData = payload =>({
+    type: actionTypes.SET_BAGHWAN_DATA,
+    payload,
+})
+
+export const getPoojaCategory = payload => {
+    return {
+        type: actionTypes.GET_POOJA_CATEGORY,
+        payload,
+    };
+};
+export const setPoojaCategory = payload =>({
+    type: actionTypes.SET_POOJA_CATEGORY,
+    payload,
+})
+
 
 

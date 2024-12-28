@@ -7,7 +7,7 @@ export const provider_img_url = 'https://astrokunj.com/admin/';
 export const img_url_astrologer = 'https://astrokunj.com/admin/uploads/vendor/';
 export const img_url_2 = 'https://astrokunj.com/admin/uploads/vendor/';
 export const img_url_page = 'https://astrokunj.com/admin/uploads/page/';
-
+export const new_img_url = 'https://astrooneapi.ksdelhi.net/'
 //Customer
 
 export const user_web_api_login = 'user_web_api/login?';
