@@ -111,7 +111,7 @@ const Home = ({
     dispatch(HomeActions.getLiveTempleData());
     // dispatch(AstrologerActions.getVideoCallAstrologers());
   }, [dispatch]);
-  
+
   const update_flash = () => {
     axios({
       method: 'post',
@@ -238,7 +238,7 @@ const Home = ({
                     {YourHoroscope()}
                     {banner5()}
                     {banner6()}
-                    {visittemple({liveTempleData})}
+                    {visittemple({ liveTempleData })}
                     {analysis()}
                     {ALMANAC()}
                     {HAPPY()}
@@ -1091,15 +1091,15 @@ const Home = ({
 
 
 
-  function visittemple({liveTempleData}) {
+  function visittemple({ liveTempleData }) {
     console.log('liveTempleData', liveTempleData?.TempleName);
-  
+
     const renderItem = ({ item }) => (
 
       <View
         style={{
           borderWidth: 0.5,
-          alignItems: 'center',
+          // alignItems: 'center',
           borderRadius: 10,
           backgroundColor: 'white',
           borderColor: 'gray',
@@ -1107,10 +1107,10 @@ const Home = ({
 
         <View
           style={{
-            height: SCREEN_HEIGHT * 0.22,
-            width: SCREEN_WIDTH * 0.42,
+            height: SCREEN_HEIGHT * 0.18,
+            width: SCREEN_WIDTH * 0.41,
           }}>
-                 <FastImage
+          <FastImage
             style={{
               width: SCREEN_WIDTH * 0.22,
               height: SCREEN_WIDTH * 0.07,
@@ -1119,8 +1119,10 @@ const Home = ({
           />
 
         </View>
-        <Text style={{ ...Fonts.PoppinsRegular }}>{item?.TempleName}</Text>
-        <Text style={{ ...Fonts.PoppinsRegular }}>{item.Description}</Text>
+        <Text style={{ ...Fonts.PoppinsRegular, textAlign: "center", fontWeight:"bold" }}>{item?.TempleName}</Text>
+        <Text style={{ ...Fonts.PoppinsRegular, textAlign: "center", width: SCREEN_WIDTH * 0.4, padding:5,}}
+          numberOfLines={1} ellipsizeMode="tail"
+        >{item?.Description}</Text>
       </View>
     );
     return (
@@ -1153,7 +1155,7 @@ const Home = ({
 
 
 
-  
+
 
   function analysis() {
     const data = [
