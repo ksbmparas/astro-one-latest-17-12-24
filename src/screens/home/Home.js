@@ -91,7 +91,7 @@ const Home = ({
   const [masterDataSource, setMasterDataSource] = useState([]);
   const [male, setMale] = useState(true);
   const [female, setFemale] = useState(false);
-   const [loading, setLoading] = useState(true);   
+  const [loading, setLoading] = useState(true);
 
   const { t } = useTranslation();
 
@@ -691,15 +691,16 @@ const Home = ({
   function banner() {
     return (
       <View
-        style={{ paddingVertical: SCREEN_HEIGHT * 0.02, flexDirection: 'row' }}>
-        <ScrollView horizontal={true}>
+        style={{ flexDirection: 'row' }}>
+        <ScrollView horizontal={true} showsHorizontalScrollIndicator={false}>
           <TouchableOpacity style={{ alignItems: 'center' }}>
             <Image
               style={{
                 height: SCREEN_HEIGHT * 0.2,
-                width: SCREEN_WIDTH * 0.98,
+                width: SCREEN_WIDTH * 0.95,
                 elevation: 1,
                 resizeMode: 'contain',
+
               }}
               source={require('../../assets/images/banner.png')}
             />
@@ -711,8 +712,20 @@ const Home = ({
                 width: SCREEN_WIDTH * 0.98,
                 elevation: 1,
                 resizeMode: 'contain',
+
               }}
-              source={require('../../assets/images/banner.png')}
+              source={require('../../assets/images/banners.png')}
+            />
+          </TouchableOpacity>
+          <TouchableOpacity style={{ alignItems: 'center' }}>
+            <Image
+              style={{
+                height: SCREEN_HEIGHT * 0.2,
+                width: SCREEN_WIDTH * 0.98,
+                elevation: 1,
+                resizeMode: 'contain',
+              }}
+              source={require('../../assets/images/banner1.png')}
             />
           </TouchableOpacity>
         </ScrollView>
@@ -1071,6 +1084,10 @@ const Home = ({
     );
   }
 
+
+
+
+
   function visittemple() {
     const data = [
       {
@@ -1079,48 +1096,48 @@ const Home = ({
         subtitle: 'घर बैठे दिव्यदर्शन',
         image: require('../../assets/images/live.png'),
       },
-      {
-        id: '2',
-        title: 'आयोध्या से सीधा प्रसारण',
-        subtitle: 'घर बैठे दिव्यदर्शन',
-        image: require('../../assets/images/live.png'),
-      },
-      {
-        id: '3',
-        title: 'काशी से सीधा प्रसारण',
-        subtitle: 'घर बैठे दिव्यदर्शन',
-        image: require('../../assets/images/live.png'),
-      },
+      // {
+      //   id: '2',
+      //   title: 'आयोध्या से सीधा प्रसारण',
+      //   subtitle: 'घर बैठे दिव्यदर्शन',
+      //   image: require('../../assets/images/live.png'),
+      // },
+      // {
+      //   id: '3',
+      //   title: 'काशी से सीधा प्रसारण',
+      //   subtitle: 'घर बैठे दिव्यदर्शन',
+      //   image: require('../../assets/images/live.png'),
+      // },
     ];
     const renderItem = ({ item }) => (
-      <TouchableOpacity
-        style={{
-          borderWidth: 1,
 
+      <View
+        style={{
+          borderWidth: 0.5,
           alignItems: 'center',
           borderRadius: 10,
           backgroundColor: 'white',
           borderColor: 'gray',
-          elevation: 3,
         }}>
+
         <View
           style={{
             height: SCREEN_HEIGHT * 0.22,
             width: SCREEN_WIDTH * 0.42,
           }}>
           <Image
+            source={require("../../assets/gifs/live_gif.gif")}  
             style={{
-              height: '100%',
-              width: '100%',
-              borderRadius: 10,
-              resizeMode: 'cover',
+              width: SCREEN_WIDTH * 0.22,
+              height: SCREEN_WIDTH * 0.07,
+              resizeMode: 'contain',
             }}
-            source={item.image}
           />
+
         </View>
         <Text style={{ ...Fonts.PoppinsRegular }}>{item.title}</Text>
         <Text style={{ ...Fonts.PoppinsRegular }}>{item.subtitle}</Text>
-      </TouchableOpacity>
+      </View>
     );
     return (
       <View style={styles.containerGap}>
@@ -2643,7 +2660,7 @@ const Home = ({
                   styles.AuspiciousCommanText,
                   { color: colors.black_color },
                 ]}>
-               {getabhijitdata?.abhijitmuhuratstart} - {getabhijitdata?.abhijitmuhuratend}
+                {getabhijitdata?.abhijitmuhuratstart} - {getabhijitdata?.abhijitmuhuratend}
               </Text>
             </View>
             <View
@@ -2678,7 +2695,7 @@ const Home = ({
                   styles.AuspiciousCommanText,
                   { color: colors.black_color },
                 ]}>
-                 {getgulikdata?.gulikkaalstart} - {getgulikdata?.gulikkaalend}
+                {getgulikdata?.gulikkaalstart} - {getgulikdata?.gulikkaalend}
               </Text>
             </View>
             <View
@@ -2687,7 +2704,7 @@ const Home = ({
                 { backgroundColor: '#6D88D5' },
               ]}>
               <Text style={[styles.AuspiciousCommanText, { color: '#0849F1' }]}>
-              Yamghantak
+                Yamghantak
               </Text>
               <Text
                 style={[

@@ -94,8 +94,14 @@ export const order_astrologer_pooja = 'ecommerce/order_astrologer_pooja';
 export const get_custoemer_booked_pooja = 'ecommerce/get_custoemer_booked_pooja';
 export const get_astro_blogs = 'admin/get_astro_blogs';
 export const get_mall_order_data = 'customers/getCustomerOrder'
-
 export const phonepeWallet = 'customers/phonepe_payment';
+
+
+//create order address
+export const create_address_cart = 'ecommerce/create_address_cart';
+export const get_address_cart = 'ecommerce/get_address_cart';
+export const delete_address_cart = 'ecommerce/delete_address_cart';
+export const update_address_cart = 'ecommerce/update_address_cart';
 
 // numerology
 export const delete_numerology = 'customers/delete_numero_data'

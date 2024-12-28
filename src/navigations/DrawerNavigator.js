@@ -272,8 +272,8 @@ function CustomDrawerContent(props) {
 
 
           <TouchableOpacity
-           onPress={()=> navigation.navigate('SendGifts')}
-            style={{ flexDirection: "row", alignItems: "center", gap: 15, paddingVertical:SCREEN_HEIGHT*0.013, borderBottomWidth: 1, borderBottomColor: "gray", paddingHorizontal: SCREEN_WIDTH * 0.04 }}>
+            onPress={() => navigation.navigate('SendGifts')}
+            style={{ flexDirection: "row", alignItems: "center", gap: 15, paddingVertical: SCREEN_HEIGHT * 0.013, borderBottomWidth: 1, borderBottomColor: "gray", paddingHorizontal: SCREEN_WIDTH * 0.04 }}>
             <View>
               <FontAwesome6
                 name='gift'
@@ -463,6 +463,20 @@ function CustomDrawerContent(props) {
           </TouchableOpacity>
 
           <TouchableOpacity
+            onPress={() => navigation.navigate('productCategory')}
+            style={styles.DrawerRowContainer}>
+            <View>
+              <Entypo
+                name='shopping-cart'
+                size={15}
+                color={"#D56A14"}
+              />
+            </View>
+
+            <Text style={styles.DrawerText}>{t('Astro_Mall')}</Text>
+          </TouchableOpacity>
+
+          <TouchableOpacity
             onPress={logout}
             style={styles.DrawerRowContainer}>
             <View>
@@ -475,6 +489,8 @@ function CustomDrawerContent(props) {
 
             <Text style={styles.DrawerText}>Logout</Text>
           </TouchableOpacity>
+
+
 
 
           {/* <TouchableOpacity
@@ -820,15 +836,15 @@ function CustomDrawerContent(props) {
 
           {/* BOTTOM CONTENT */}
 
-          <View style={{paddingTop:SCREEN_WIDTH*0.08}}>
+          <View style={{ paddingTop: SCREEN_WIDTH * 0.08 }}>
 
             <View style={{ alignItems: "center" }}>
-              <Text style={{...Fonts.PoppinsMedium,color:'#D56A14',fontSize:20 }}>AstrOne</Text>
+              <Text style={{ ...Fonts.PoppinsMedium, color: '#D56A14', fontSize: 20 }}>AstrOne</Text>
             </View>
 
             <View style={{ alignItems: "center", gap: 8 }}>
-              <Text style={{...Fonts.PoppinsRegular}}>Connect the cosmic dots</Text>
-              <Text style={{ ...Fonts.PoppinsRegular}}>Folllow AstroOne for exclusive updates on:</Text>
+              <Text style={{ ...Fonts.PoppinsRegular }}>Connect the cosmic dots</Text>
+              <Text style={{ ...Fonts.PoppinsRegular }}>Folllow AstroOne for exclusive updates on:</Text>
             </View>
 
             <View style={{ flexDirection: "row", alignItems: "center", justifyContent: "space-between", paddingHorizontal: SCREEN_WIDTH * 0.12, paddingVertical: SCREEN_HEIGHT * 0.02 }}>
@@ -860,6 +876,10 @@ function CustomDrawerContent(props) {
                   style={{ height: '100%', width: '100%' }}
                   source={require('../assets/icons/Instagram.png')} />
               </TouchableOpacity>
+
+
+
+
             </View>
 
 

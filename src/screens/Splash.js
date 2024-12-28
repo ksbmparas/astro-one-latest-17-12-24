@@ -47,7 +47,7 @@ const Splash = ({ props, route, data, navigation, data1, dispatch }) => {
       dispatch(SettingActions.getSplash(dispatch))
       socketServices.initializeSocket(dispatch);
 
-    }, 10000);
+    }, 1000);
   }, []);
 
   const get_is_request_active = async () => {
