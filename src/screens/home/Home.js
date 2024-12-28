@@ -81,7 +81,8 @@ const Home = ({
   getabhijitdata,
   getdurmuhurtdata,
   getgulikdata,
-  getyamgantakdata
+  getyamgantakdata,
+  liveTempleData
 }) => {
   const [astoListData, setAstroListData] = useState(false);
   const [livelist, setLivelist] = useState(null);
@@ -107,8 +108,10 @@ const Home = ({
     dispatch(HomeActions.getDurMuhurat());
     dispatch(HomeActions.getGulikMuhurat());
     dispatch(HomeActions.getYamMuhurat());
+    dispatch(HomeActions.getLiveTempleData());
     // dispatch(AstrologerActions.getVideoCallAstrologers());
   }, [dispatch]);
+  
   const update_flash = () => {
     axios({
       method: 'post',
@@ -235,7 +238,7 @@ const Home = ({
                     {YourHoroscope()}
                     {banner5()}
                     {banner6()}
-                    {visittemple()}
+                    {visittemple({liveTempleData})}
                     {analysis()}
                     {ALMANAC()}
                     {HAPPY()}
@@ -1088,27 +1091,9 @@ const Home = ({
 
 
 
-  function visittemple() {
-    const data = [
-      {
-        id: '1',
-        title: 'उज्जैन से सीधा प्रसारण',
-        subtitle: 'घर बैठे दिव्यदर्शन',
-        image: require('../../assets/images/live.png'),
-      },
-      // {
-      //   id: '2',
-      //   title: 'आयोध्या से सीधा प्रसारण',
-      //   subtitle: 'घर बैठे दिव्यदर्शन',
-      //   image: require('../../assets/images/live.png'),
-      // },
-      // {
-      //   id: '3',
-      //   title: 'काशी से सीधा प्रसारण',
-      //   subtitle: 'घर बैठे दिव्यदर्शन',
-      //   image: require('../../assets/images/live.png'),
-      // },
-    ];
+  function visittemple({liveTempleData}) {
+    console.log('liveTempleData', liveTempleData?.TempleName);
+  
     const renderItem = ({ item }) => (
 
       <View
@@ -1125,18 +1110,17 @@ const Home = ({
             height: SCREEN_HEIGHT * 0.22,
             width: SCREEN_WIDTH * 0.42,
           }}>
-          <Image
-            source={require("../../assets/gifs/live_gif.gif")}  
+                 <FastImage
             style={{
               width: SCREEN_WIDTH * 0.22,
               height: SCREEN_WIDTH * 0.07,
-              resizeMode: 'contain',
             }}
+            source={require('../../assets/gifs/live_gif.gif')}
           />
 
         </View>
-        <Text style={{ ...Fonts.PoppinsRegular }}>{item.title}</Text>
-        <Text style={{ ...Fonts.PoppinsRegular }}>{item.subtitle}</Text>
+        <Text style={{ ...Fonts.PoppinsRegular }}>{item?.TempleName}</Text>
+        <Text style={{ ...Fonts.PoppinsRegular }}>{item.Description}</Text>
       </View>
     );
     return (
@@ -1152,7 +1136,7 @@ const Home = ({
 
         <FlatList
           horizontal
-          data={data}
+          data={liveTempleData}
           renderItem={renderItem}
           keyExtractor={item => item.id}
           contentContainerStyle={{
@@ -1163,6 +1147,13 @@ const Home = ({
       </View>
     );
   }
+
+
+
+
+
+
+  
 
   function analysis() {
     const data = [
@@ -2935,6 +2926,7 @@ const mapStateToProps = state => ({
   getdurmuhurtdata: state.home.getdurmuhurtdata,
   getgulikdata: state.home.getgulikdata,
   getyamgantakdata: state.home.getyamgantakdata,
+  liveTempleData: state.home.liveTempleData,
 });
 
 const mapDispatchToProps = dispatch => ({ dispatch });

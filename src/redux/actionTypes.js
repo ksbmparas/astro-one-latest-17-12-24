@@ -331,3 +331,7 @@ export const GET_DELETE_CART = 'GET_DELETE_CART';
 export const SET_UPDATE_ADDRESS = 'SET_UPDATE_ADDRESS';
 export const GET_UPDATE_ADDRESS = 'GET_UPDATE_ADDRESS';
 
+//Virtue of visiting famout temples (Live)
+export const GET_LIVE_TEMPLE_DATA = 'GET_LIVE_TEMPLE_DATA';
+export const SET_LIVE_TEMPLE_DATA = 'SET_LIVE_TEMPLE_DATA';
+

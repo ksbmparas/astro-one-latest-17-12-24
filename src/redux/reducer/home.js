@@ -14,7 +14,8 @@ const initialState = {
     getabhijitdata: null,
     getdurmuhurtdata: null,
     getgulikdata:null,
-    getyamgantakdata: null
+    getyamgantakdata: null,
+    liveTempleData: null,
 };
 
 const home = (state = initialState, action) => {
@@ -91,6 +92,11 @@ const home = (state = initialState, action) => {
                     ...state,
                     getyamgantakdata: payload,
                 };
+        case actionTypes.SET_LIVE_TEMPLE_DATA:
+            return{
+                ...state,
+                liveTempleData: payload,
+            }
 
         default:
             return state;

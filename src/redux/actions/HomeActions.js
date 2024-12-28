@@ -110,6 +110,16 @@ export const setYamMuhurat = payload =>({
     payload,
 })
 
+export const getLiveTempleData = payload =>({
+    type: actionTypes.GET_LIVE_TEMPLE_DATA,
+    payload,
+})
+
+export const setLiveTempleData = payload =>({
+    type: actionTypes.SET_LIVE_TEMPLE_DATA,
+    payload,
+})
+
 
 
 
