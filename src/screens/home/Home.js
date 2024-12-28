@@ -26,6 +26,7 @@ import {
 import React from 'react';
 import Carousel from 'react-native-reanimated-carousel';
 import BouncyCheckbox from 'react-native-bouncy-checkbox';
+import { WebView } from 'react-native-webview';
 
 import { useEffect, useRef } from 'react';
 import {
@@ -1092,14 +1093,15 @@ const Home = ({
 
 
   function visittemple({ liveTempleData }) {
-    console.log('liveTempleData', liveTempleData?.TempleName);
+
+    console.log("video linke", liveTempleData?.VideoLink);
+
 
     const renderItem = ({ item }) => (
 
       <View
         style={{
           borderWidth: 0.5,
-          // alignItems: 'center',
           borderRadius: 10,
           backgroundColor: 'white',
           borderColor: 'gray',
@@ -1117,12 +1119,25 @@ const Home = ({
             }}
             source={require('../../assets/gifs/live_gif.gif')}
           />
+          <WebView
+            source={{ uri: item?.VideoLink }}
+            style={styles.webview}
+            javaScriptEnabled={true}
+            domStorageEnabled={true}
+          />
+
 
         </View>
-        <Text style={{ ...Fonts.PoppinsRegular, textAlign: "center", fontWeight:"bold" }}>{item?.TempleName}</Text>
-        <Text style={{ ...Fonts.PoppinsRegular, textAlign: "center", width: SCREEN_WIDTH * 0.4, padding:5,}}
-          numberOfLines={1} ellipsizeMode="tail"
-        >{item?.Description}</Text>
+
+
+        <View style={{ padding: 10 }}>
+          <Text style={{ ...Fonts.PoppinsRegular, textAlign: "center", fontWeight: "bold" }}>{item?.TempleName}</Text>
+          <Text style={{ ...Fonts.PoppinsRegular, textAlign: "center", width: SCREEN_WIDTH * 0.4 }}
+            numberOfLines={1} ellipsizeMode="tail"
+          >{item?.Description}</Text>
+        </View>
+
+
       </View>
     );
     return (
