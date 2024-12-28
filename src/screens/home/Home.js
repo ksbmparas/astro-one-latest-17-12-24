@@ -867,7 +867,7 @@ const Home = ({
             </TouchableOpacity>
 
             <TouchableOpacity
-              onPress={() => navigation.navigate('VardaniBargad')}
+              onPress={() => navigation.navigate('Shivalya')}
               style={{
                 height: SCREEN_HEIGHT * 0.21,
                 width: SCREEN_WIDTH * 0.42,

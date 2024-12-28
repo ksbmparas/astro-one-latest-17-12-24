@@ -1,7 +1,7 @@
 import { call, put, select, takeLatest, takeLeading } from 'redux-saga/effects';
 import { getRequest, postRequest } from '../../utils/apiRequests';
 import * as actionTypes from '../actionTypes';
-import { api_url, customer_home_banner, get_gifsanatan, get_active_astrologer, get_astro_companion, get_call_astrologer, get_chat_astrologer, get_delete_account_data, get_notification_data, get_video_call_astrologer } from '../../config/constants';
+import { api_url, customer_home_banner, get_gifsanatan, get_active_astrologer, get_astro_companion, get_call_astrologer, get_chat_astrologer, get_delete_account_data, get_notification_data, get_video_call_astrologer, get_referres, get_mudra, get_lota_mudra, get_baghwan, get_pooja_category } from '../../config/constants';
 import { showToastMessage } from '../../utils/services';
 import { resetToScreen } from '../../navigations/NavigationServices';
 
@@ -441,7 +441,101 @@ function* getYamghantMuhurat(actions) {
         }
 }
 
+function* getPradhan(actions) {
+    try {
+        const { payload } = actions
+        const response = yield getRequest({
+             url: api_url + get_referres,
+        })
+        console.log("response:>>>",response)
+        if (response?.success) {
+            yield put({ type: actionTypes.SET_PRADHAN_DATA, payload: response?.data })
+        }
+        yield put({ type: actionTypes.SET_HOME_SIMMER, payload: false })
 
+    } catch (e) {
+        yield put({ type: actionTypes.SET_HOME_SIMMER, payload: false })
+        console.log('hii', e);
+    }
+}
+
+function* getMudra(actions) {
+    try {
+        const { payload } = actions
+        console.log(payload,"oisadhfdosahoh")
+        const response = yield postRequest({
+             url: api_url + get_mudra,
+             data:payload
+        })
+        console.log("responsepradhan>>>:::",response)
+        if (response?.success) {
+            yield put({ type: actionTypes.SET_MUDRA_DATA, payload: response })
+        }
+        yield put({ type: actionTypes.SET_HOME_SIMMER, payload: false })
+
+    } catch (e) {
+        yield put({ type: actionTypes.SET_HOME_SIMMER, payload: false })
+        console.log('hii', e);
+    }
+}
+function* getLotaMudra(actions) {
+    try {
+        const { payload } = actions
+        console.log(payload,"oisadhfdosahoh")
+        const response = yield postRequest({
+             url: api_url + get_lota_mudra,
+             data:payload
+        })
+        console.log("responsepradhan>>>:::",response)
+        if (response?.success) {
+            yield put({ type: actionTypes.SET_LOTA_MUDRA_DATA, payload: response })
+            yield put({ type: actionTypes.GET_MUDRA_DATA });        }
+        yield put({ type: actionTypes.SET_HOME_SIMMER, payload: false })
+
+    } catch (e) {
+        yield put({ type: actionTypes.SET_HOME_SIMMER, payload: false })
+        console.log('hii', e);
+    }
+}
+
+function* getBaghwandata(actions) {
+    try {
+        const { payload } = actions
+        yield put({ type: actionTypes.SET_SANATAN_TEMPLE_GIF, payload: true })
+     
+        const baghwanData = yield getRequest({
+             url: api_url + get_baghwan,
+           
+        })
+        console.log("baghwanData",baghwanData)
+        if (baghwanData?.success) {
+            yield put({ type: actionTypes.SET_BAGHWAN_DATA, payload: baghwanData?.data })
+        }
+        yield put({ type: actionTypes.SET_HOME_SIMMER, payload: false })
+
+    } catch (e) {
+        yield put({ type: actionTypes.SET_HOME_SIMMER, payload: false })
+        console.log('hii', e);
+    }
+}
+function* getPoojacategory(actions) {
+    try {
+        const { payload } = actions
+     const poojaData = yield getRequest({
+             url: api_url + get_pooja_category,
+           
+        })
+        console.log("poojaData",poojaData?.success)
+        if (poojaData?.success) {
+            yield put({ type: actionTypes.SET_POOJA_CATEGORY, payload: poojaData?.data })
+        }
+        yield put({ type: actionTypes.SET_HOME_SIMMER, payload: false })
+
+    } catch (e) {
+        yield put({ type: actionTypes.SET_HOME_SIMMER, payload: false })
+        console.log('hii', e);
+    }
+}
 export default function* homeSaga() {
     yield takeLatest(actionTypes.GET_HOME_DATA, getHomeData);
     yield takeLeading(actionTypes.GET_HOME_DATA_ON_REFRESH, getHomeDataOnRefresh);
@@ -454,4 +548,9 @@ export default function* homeSaga() {
     yield takeLeading(actionTypes.GET_DUR_MUHURAT, getDurMuhurat);
     yield takeLeading(actionTypes.GET_GULIK_MUHURAT, getGulikMuhurat);
     yield takeLeading(actionTypes.GET_YAM_MUHURAT, getYamghantMuhurat);
+    yield takeLeading(actionTypes.GET_PRADHAN_DATA, getPradhan);
+    yield takeLeading(actionTypes.GET_MUDRA_DATA, getMudra);
+    yield takeLeading(actionTypes.GET_LOTA_MUDRA_DATA, getLotaMudra);
+    yield takeLeading(actionTypes.GET_BAGHWAN_DATA, getBaghwandata);
+    yield takeLeading(actionTypes.GET_POOJA_CATEGORY, getPoojacategory);
 }

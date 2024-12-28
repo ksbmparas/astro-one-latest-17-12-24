@@ -25,7 +25,7 @@ function* onLogin(actions) {
             data: payload
         })
         console.log(":::::response", response)
-        if (response?.status) {
+        if (response?.success) {
             yield call(navigate, 'otp', { ...payload, otp: response?.otp })
         }else{
             // Alert.alert("Astro Remedy",response?.message)
