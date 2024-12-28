@@ -1110,7 +1110,7 @@ const Home = ({
         <View
           style={{
             height: SCREEN_HEIGHT * 0.18,
-            width: SCREEN_WIDTH * 0.41,
+            width: SCREEN_WIDTH * 0.45,
           }}>
           <FastImage
             style={{
@@ -1121,7 +1121,10 @@ const Home = ({
           />
           <WebView
             source={{ uri: item?.VideoLink }}
-            style={styles.webview}
+            style={{
+              height: 270,  // Adjust based on the desired video size
+              marginBottom: 30
+            }}
             javaScriptEnabled={true}
             domStorageEnabled={true}
           />
