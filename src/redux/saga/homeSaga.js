@@ -206,11 +206,6 @@ function* getTemplegif(actions) {
 
         console.log(templegifResponse, 'hiiii')
 
-
-
-
-
-
         yield put({ type: actionTypes.SET_HOME_SIMMER, payload: false })
 
     } catch (e) {
@@ -223,7 +218,7 @@ function* getSanatangif(actions) {
     try {
         const { payload } = actions
         yield put({ type: actionTypes.SET_SANATAN_TEMPLE_GIF, payload: true })
-     
+
         const sanatanMandirgif = yield getRequest({
             // url: api_url + get_gifsanatan,
             url: 'https://astrooneapi.ksdelhi.net/api/admin/get_temple'
@@ -250,8 +245,8 @@ function* getAbijitMuhurt(actions) {
 
         const timezone = (currentDate.getTimezoneOffset() / -60).toFixed(1);
 
-        const latitude = payload?.lat || "+28.70"; 
-        const longitude = payload?.lon || "+77.10"; 
+        const latitude = payload?.lat || "+28.70";
+        const longitude = payload?.lon || "+77.10";
 
         const USER_ID = "tathastujy";
         const AUTH_CODE = "86ce34784bfc07a39392bf690995ef33";
@@ -259,13 +254,13 @@ function* getAbijitMuhurt(actions) {
         const LANGUAGE = "hi";
 
         const requestData = {
-            d: date,         
-            tz: timezone,    
-            lat: latitude,   
-            lon: longitude,  
-            userid: USER_ID, 
+            d: date,
+            tz: timezone,
+            lat: latitude,
+            lon: longitude,
+            userid: USER_ID,
             authcode: AUTH_CODE,
-            lang: LANGUAGE 
+            lang: LANGUAGE
         };
 
         console.log("Data being sent to API:", requestData);
@@ -273,7 +268,7 @@ function* getAbijitMuhurt(actions) {
         const response = yield postRequest({
             url: "https://api.kundli.click/cust_tathastujy_v0.4/muhurat-abhijit",
             data: requestData,
-            header:'post'
+            header: 'post'
         });
 
         console.log("API Response:", response);
@@ -309,37 +304,37 @@ function* getDurMuhurat(actions) {
 
         const durmuhuratTypes = "rahukaal";
 
-            const requestData = {
-                durmuhurat:durmuhuratTypes,
-                d: date,
-                tz: timezone,
-                lat: latitude,
-                lon: longitude,
-                userid: USER_ID,
-                authcode: AUTH_CODE,
-                lang: LANGUAGE
-            };
+        const requestData = {
+            durmuhurat: durmuhuratTypes,
+            d: date,
+            tz: timezone,
+            lat: latitude,
+            lon: longitude,
+            userid: USER_ID,
+            authcode: AUTH_CODE,
+            lang: LANGUAGE
+        };
 
-            const response = yield postRequest({
-                url: "https://api.kundli.click/cust_tathastujy_v0.4/durmuhurat",
-                data: requestData,
-                header: 'post',
-            });
+        const response = yield postRequest({
+            url: "https://api.kundli.click/cust_tathastujy_v0.4/durmuhurat",
+            data: requestData,
+            header: 'post',
+        });
 
-            console.log("Response for durmuhurat", response);
+        console.log("Response for durmuhurat", response);
 
-            if (response) {
-                yield put({ type: actionTypes.SET_DUR_MUHURAT, payload: response });
-            } else {
-                console.error("API Error Response:", response);
-            }
-    
-            yield put({ type: actionTypes.SET_IS_LOADING, payload: false });
-        } catch (e) {
-            yield put({ type: actionTypes.SET_IS_LOADING, payload: false });
-            console.error("Error fetching Abhijit Muhurat:", e);
+        if (response) {
+            yield put({ type: actionTypes.SET_DUR_MUHURAT, payload: response });
+        } else {
+            console.error("API Error Response:", response);
         }
+
+        yield put({ type: actionTypes.SET_IS_LOADING, payload: false });
+    } catch (e) {
+        yield put({ type: actionTypes.SET_IS_LOADING, payload: false });
+        console.error("Error fetching Abhijit Muhurat:", e);
     }
+}
 
 function* getGulikMuhurat(actions) {
     try {
@@ -359,36 +354,36 @@ function* getGulikMuhurat(actions) {
 
         const durmuhuratTypes = "gulikkaal";
 
-            const requestData = {
-                durmuhurat:durmuhuratTypes,
-                d: date,
-                tz: timezone,
-                lat: latitude,
-                lon: longitude,
-                userid: USER_ID,
-                authcode: AUTH_CODE,
-                lang: LANGUAGE
-            };
+        const requestData = {
+            durmuhurat: durmuhuratTypes,
+            d: date,
+            tz: timezone,
+            lat: latitude,
+            lon: longitude,
+            userid: USER_ID,
+            authcode: AUTH_CODE,
+            lang: LANGUAGE
+        };
 
-            const response = yield postRequest({
-                url: "https://api.kundli.click/cust_tathastujy_v0.4/durmuhurat",
-                data: requestData,
-                header: 'post',
-            });
+        const response = yield postRequest({
+            url: "https://api.kundli.click/cust_tathastujy_v0.4/durmuhurat",
+            data: requestData,
+            header: 'post',
+        });
 
-            console.log("Response for durmuhurat", response);
+        console.log("Response for durmuhurat", response);
 
-            if (response) {
-                yield put({ type: actionTypes.SET_GULIK_MUHURAT, payload: response });
-            } else {
-                console.error("API Error Response:", response);
-            }
-
-            yield put({ type: actionTypes.SET_IS_LOADING, payload: false });
-        } catch (e) {
-            yield put({ type: actionTypes.SET_IS_LOADING, payload: false });
-            console.error("Error fetching Abhijit Muhurat:", e);
+        if (response) {
+            yield put({ type: actionTypes.SET_GULIK_MUHURAT, payload: response });
+        } else {
+            console.error("API Error Response:", response);
         }
+
+        yield put({ type: actionTypes.SET_IS_LOADING, payload: false });
+    } catch (e) {
+        yield put({ type: actionTypes.SET_IS_LOADING, payload: false });
+        console.error("Error fetching Abhijit Muhurat:", e);
+    }
 }
 
 function* getYamghantMuhurat(actions) {
@@ -409,37 +404,63 @@ function* getYamghantMuhurat(actions) {
 
         const durmuhuratTypes = "yamgantakkaal";
 
-            const requestData = {
-                durmuhurat:durmuhuratTypes,
-                d: date,
-                tz: timezone,
-                lat: latitude,
-                lon: longitude,
-                userid: USER_ID,
-                authcode: AUTH_CODE,
-                lang: LANGUAGE
-            };
+        const requestData = {
+            durmuhurat: durmuhuratTypes,
+            d: date,
+            tz: timezone,
+            lat: latitude,
+            lon: longitude,
+            userid: USER_ID,
+            authcode: AUTH_CODE,
+            lang: LANGUAGE
+        };
 
-            const response = yield postRequest({
-                url: "https://api.kundli.click/cust_tathastujy_v0.4/durmuhurat",
-                data: requestData,
-                header: 'post',
-            });
+        const response = yield postRequest({
+            url: "https://api.kundli.click/cust_tathastujy_v0.4/durmuhurat",
+            data: requestData,
+            header: 'post',
+        });
 
-            console.log("Response for durmuhurat", response);
+        console.log("Response for durmuhurat", response);
 
-            if (response) {
-                yield put({ type: actionTypes.SET_YAM_MUHURAT, payload: response });
-            } else {
-                console.error("API Error Response:", response);
-            }
-
-            yield put({ type: actionTypes.SET_IS_LOADING, payload: false });
-        } catch (e) {
-            yield put({ type: actionTypes.SET_IS_LOADING, payload: false });
-            console.error("Error fetching Abhijit Muhurat:", e);
+        if (response) {
+            yield put({ type: actionTypes.SET_YAM_MUHURAT, payload: response });
+        } else {
+            console.error("API Error Response:", response);
         }
+
+        yield put({ type: actionTypes.SET_IS_LOADING, payload: false });
+    } catch (e) {
+        yield put({ type: actionTypes.SET_IS_LOADING, payload: false });
+        console.error("Error fetching Abhijit Muhurat:", e);
+    }
 }
+
+function* getLiveTempleData(actions) {
+    try {
+        const { payload } = actions;
+        yield put({ type: actionTypes.SET_IS_LOADING, payload: true });
+        const response = yield getRequest({
+            url: "https://astrooneapi.ksdelhi.net/api/admin/get_Darshan",
+        })
+
+        console.log("Response for Live Temple Data", response);
+
+        if (response?.success) {
+            yield put({ type: actionTypes.SET_LIVE_TEMPLE_DATA, payload: response?.data});
+        
+            console.log("Response for Live Temple Data", response?.data);
+            
+        }
+
+    } catch (error) {
+
+        console.log("Something went wrong:::::", error);
+
+    }
+}
+
+
 
 
 export default function* homeSaga() {
@@ -454,4 +475,5 @@ export default function* homeSaga() {
     yield takeLeading(actionTypes.GET_DUR_MUHURAT, getDurMuhurat);
     yield takeLeading(actionTypes.GET_GULIK_MUHURAT, getGulikMuhurat);
     yield takeLeading(actionTypes.GET_YAM_MUHURAT, getYamghantMuhurat);
+    yield takeLeading(actionTypes.GET_LIVE_TEMPLE_DATA, getLiveTempleData);
 }

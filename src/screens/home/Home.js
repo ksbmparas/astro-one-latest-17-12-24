@@ -26,6 +26,7 @@ import {
 import React from 'react';
 import Carousel from 'react-native-reanimated-carousel';
 import BouncyCheckbox from 'react-native-bouncy-checkbox';
+import { WebView } from 'react-native-webview';
 
 import { useEffect, useRef } from 'react';
 import {
@@ -81,7 +82,8 @@ const Home = ({
   getabhijitdata,
   getdurmuhurtdata,
   getgulikdata,
-  getyamgantakdata
+  getyamgantakdata,
+  liveTempleData
 }) => {
   const [astoListData, setAstroListData] = useState(false);
   const [livelist, setLivelist] = useState(null);
@@ -107,8 +109,10 @@ const Home = ({
     dispatch(HomeActions.getDurMuhurat());
     dispatch(HomeActions.getGulikMuhurat());
     dispatch(HomeActions.getYamMuhurat());
+    dispatch(HomeActions.getLiveTempleData());
     // dispatch(AstrologerActions.getVideoCallAstrologers());
   }, [dispatch]);
+
   const update_flash = () => {
     axios({
       method: 'post',
@@ -235,7 +239,7 @@ const Home = ({
                     {YourHoroscope()}
                     {banner5()}
                     {banner6()}
-                    {visittemple()}
+                    {visittemple({ liveTempleData })}
                     {analysis()}
                     {ALMANAC()}
                     {HAPPY()}
@@ -691,15 +695,16 @@ const Home = ({
   function banner() {
     return (
       <View
-        style={{ paddingVertical: SCREEN_HEIGHT * 0.02, flexDirection: 'row' }}>
-        <ScrollView horizontal={true}>
+        style={{ flexDirection: 'row' }}>
+        <ScrollView horizontal={true} showsHorizontalScrollIndicator={false}>
           <TouchableOpacity style={{ alignItems: 'center' }}>
             <Image
               style={{
                 height: SCREEN_HEIGHT * 0.2,
-                width: SCREEN_WIDTH * 0.98,
+                width: SCREEN_WIDTH * 0.95,
                 elevation: 1,
                 resizeMode: 'contain',
+
               }}
               source={require('../../assets/images/banner.png')}
             />
@@ -711,8 +716,20 @@ const Home = ({
                 width: SCREEN_WIDTH * 0.98,
                 elevation: 1,
                 resizeMode: 'contain',
+
               }}
-              source={require('../../assets/images/banner.png')}
+              source={require('../../assets/images/banners.png')}
+            />
+          </TouchableOpacity>
+          <TouchableOpacity style={{ alignItems: 'center' }}>
+            <Image
+              style={{
+                height: SCREEN_HEIGHT * 0.2,
+                width: SCREEN_WIDTH * 0.98,
+                elevation: 1,
+                resizeMode: 'contain',
+              }}
+              source={require('../../assets/images/banner1.png')}
             />
           </TouchableOpacity>
         </ScrollView>
@@ -1071,56 +1088,57 @@ const Home = ({
     );
   }
 
-  function visittemple() {
-    const data = [
-      {
-        id: '1',
-        title: 'उज्जैन से सीधा प्रसारण',
-        subtitle: 'घर बैठे दिव्यदर्शन',
-        image: require('../../assets/images/live.png'),
-      },
-      {
-        id: '2',
-        title: 'आयोध्या से सीधा प्रसारण',
-        subtitle: 'घर बैठे दिव्यदर्शन',
-        image: require('../../assets/images/live.png'),
-      },
-      {
-        id: '3',
-        title: 'काशी से सीधा प्रसारण',
-        subtitle: 'घर बैठे दिव्यदर्शन',
-        image: require('../../assets/images/live.png'),
-      },
-    ];
-    const renderItem = ({ item }) => (
-      <TouchableOpacity
-        style={{
-          borderWidth: 1,
 
-          alignItems: 'center',
+
+
+
+  function visittemple({ liveTempleData }) {
+
+    console.log("video linke", liveTempleData?.VideoLink);
+
+
+    const renderItem = ({ item }) => (
+
+      <View
+        style={{
+          borderWidth: 0.5,
           borderRadius: 10,
           backgroundColor: 'white',
           borderColor: 'gray',
-          elevation: 3,
         }}>
+
         <View
           style={{
-            height: SCREEN_HEIGHT * 0.22,
-            width: SCREEN_WIDTH * 0.42,
+            height: SCREEN_HEIGHT * 0.18,
+            width: SCREEN_WIDTH * 0.41,
           }}>
-          <Image
+          <FastImage
             style={{
-              height: '100%',
-              width: '100%',
-              borderRadius: 10,
-              resizeMode: 'cover',
+              width: SCREEN_WIDTH * 0.22,
+              height: SCREEN_WIDTH * 0.07,
             }}
-            source={item.image}
+            source={require('../../assets/gifs/live_gif.gif')}
           />
+          <WebView
+            source={{ uri: item?.VideoLink }}
+            style={styles.webview}
+            javaScriptEnabled={true}
+            domStorageEnabled={true}
+          />
+
+
         </View>
-        <Text style={{ ...Fonts.PoppinsRegular }}>{item.title}</Text>
-        <Text style={{ ...Fonts.PoppinsRegular }}>{item.subtitle}</Text>
-      </TouchableOpacity>
+
+
+        <View style={{ padding: 10 }}>
+          <Text style={{ ...Fonts.PoppinsRegular, textAlign: "center", fontWeight: "bold" }}>{item?.TempleName}</Text>
+          <Text style={{ ...Fonts.PoppinsRegular, textAlign: "center", width: SCREEN_WIDTH * 0.4 }}
+            numberOfLines={1} ellipsizeMode="tail"
+          >{item?.Description}</Text>
+        </View>
+
+
+      </View>
     );
     return (
       <View style={styles.containerGap}>
@@ -1135,7 +1153,7 @@ const Home = ({
 
         <FlatList
           horizontal
-          data={data}
+          data={liveTempleData}
           renderItem={renderItem}
           keyExtractor={item => item.id}
           contentContainerStyle={{
@@ -1146,6 +1164,13 @@ const Home = ({
       </View>
     );
   }
+
+
+
+
+
+
+
 
   function analysis() {
     const data = [
@@ -2918,6 +2943,7 @@ const mapStateToProps = state => ({
   getdurmuhurtdata: state.home.getdurmuhurtdata,
   getgulikdata: state.home.getgulikdata,
   getyamgantakdata: state.home.getyamgantakdata,
+  liveTempleData: state.home.liveTempleData,
 });
 
 const mapDispatchToProps = dispatch => ({ dispatch });

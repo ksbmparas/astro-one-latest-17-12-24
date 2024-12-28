@@ -129,7 +129,7 @@ import NewMatching1 from '../screens/kundli/Match/NewMatching1';
 import Matching1 from './Matching1';
 import PlaceOfBirth2 from '../screens/kundli/Match/PlaceOfBirth2';
 import daily from '../screens/customer/horoscope/daily';
-import { ZegoUIKitPrebuiltCallWaitingScreen, ZegoUIKitPrebuiltCallInCallScreen} from '@zegocloud/zego-uikit-prebuilt-call-rn';
+import { ZegoUIKitPrebuiltCallWaitingScreen, ZegoUIKitPrebuiltCallInCallScreen } from '@zegocloud/zego-uikit-prebuilt-call-rn';
 import OrderHisory from '../screens/history/OrderHisory';
 import Productfull from '../screens/history/Productfull';
 // import Poojainfo from '../screens/pooja/Poojainfo';
@@ -164,6 +164,9 @@ import KavachDetails from '../screens/Religion Collection/KavachDetails';
 import PoojaVidhiDetails from '../screens/Religion Collection/PoojaVidhiDetails';
 import NewPanchang from '../screens/Pachang/NewPanchang';
 import HomeSimmer from '../components/HomeSimmer';
+import AddAddress from '../screens/ecommerce/AddAddress';
+import Address from '../screens/ecommerce/Address';
+import UpdateAddress from '../screens/ecommerce/UpdateAddress';
 
 
 
@@ -188,8 +191,8 @@ const StackNavigator = (data, data1) => {
       <Stack.Screen name="login" component={Login} />
       <Stack.Screen name="customerLogin" component={CustomerLogin} />
       <Stack.Screen name="signup" component={Signup} />
-      
-      
+
+
 
       <Stack.Group
         screenOptions={{
@@ -207,34 +210,34 @@ const StackNavigator = (data, data1) => {
         <Stack.Screen name="PoojaStatus" component={PoojaStatus} />
         <Stack.Screen name="PaymentModal" component={PaymentModal} />
 
-        <Stack.Screen name='Artithali'component={Artithali}/>
-        <Stack.Screen name='Coconut'component={Coconut}/>
-        <Stack.Screen name='AstrologerDetailesChat'component={AstrologerDetailesChat}/>
-        <Stack.Screen name='ReferEarn'component={ReferEarn}/>
-        <Stack.Screen name='about'component={about}/>
-        <Stack.Screen name='AstrologerLogin'component={AstrologerLogin}/>
-        <Stack.Screen name='VerfiedAstrologer'component={VerfiedAstrologer}/>
-        <Stack.Screen name='ForgotPassword'component={ForgotPassword}/>
-    
-        <Stack.Screen name='SendGifts'component={SendGifts}/>
-        <Stack.Screen name='CustomerTestimonials'component={CustomerTestimonials}/>
-        <Stack.Screen name='PujaSection'component={PujaSection}/>
-        <Stack.Screen name='BookPooja'component={BookPooja}/>
-        <Stack.Screen name='DetailPujaScreens'component={DetailPujaScreens}/>
-        <Stack.Screen name='Chalisa'component={Chalisa}/>
-        <Stack.Screen name='ChalisaDetails'component={ChalisaDetails}/>
-        <Stack.Screen name='BeejMantraDetails'component={BeejMantraDetails}/>
-        <Stack.Screen name='AartiDetails'component={AartiDetails}/>
-        <Stack.Screen name='KavachDetails'component={KavachDetails}/>
-        <Stack.Screen name='PoojaVidhiDetails'component={PoojaVidhiDetails}/>
+        <Stack.Screen name='Artithali' component={Artithali} />
+        <Stack.Screen name='Coconut' component={Coconut} />
+        <Stack.Screen name='AstrologerDetailesChat' component={AstrologerDetailesChat} />
+        <Stack.Screen name='ReferEarn' component={ReferEarn} />
+        <Stack.Screen name='about' component={about} />
+        <Stack.Screen name='AstrologerLogin' component={AstrologerLogin} />
+        <Stack.Screen name='VerfiedAstrologer' component={VerfiedAstrologer} />
+        <Stack.Screen name='ForgotPassword' component={ForgotPassword} />
 
-        <Stack.Screen name='NewPanchang'component={NewPanchang}/>
-        
-        
-        
-        
-        
-        
+        <Stack.Screen name='SendGifts' component={SendGifts} />
+        <Stack.Screen name='CustomerTestimonials' component={CustomerTestimonials} />
+        <Stack.Screen name='PujaSection' component={PujaSection} />
+        <Stack.Screen name='BookPooja' component={BookPooja} />
+        <Stack.Screen name='DetailPujaScreens' component={DetailPujaScreens} />
+        <Stack.Screen name='Chalisa' component={Chalisa} />
+        <Stack.Screen name='ChalisaDetails' component={ChalisaDetails} />
+        <Stack.Screen name='BeejMantraDetails' component={BeejMantraDetails} />
+        <Stack.Screen name='AartiDetails' component={AartiDetails} />
+        <Stack.Screen name='KavachDetails' component={KavachDetails} />
+        <Stack.Screen name='PoojaVidhiDetails' component={PoojaVidhiDetails} />
+
+        <Stack.Screen name='NewPanchang' component={NewPanchang} />
+
+
+
+
+
+
         <Stack.Screen
           name="showKundliKpPlanets"
           component={ShowKundliKpPlanets}
@@ -256,8 +259,8 @@ const StackNavigator = (data, data1) => {
         <Stack.Screen name='dashakoota' component={Dashakoota} />
         {/* <Stack.Screen name='chart' component={Chart}/> */}
         <Stack.Screen name='matchreport' component={MatchReport} />
-        <Stack.Screen name='numero' component={Numerology}/>
-        <Stack.Screen name='NumerologyForU' component={NumerologyForU}/>
+        <Stack.Screen name='numero' component={Numerology} />
+        <Stack.Screen name='NumerologyForU' component={NumerologyForU} />
         <Stack.Screen
           name="kundliBirthDetailes"
           component={KundliBirthDetailes}
@@ -278,9 +281,9 @@ const StackNavigator = (data, data1) => {
           options={{ title: t('remedies') }}
         />
         <Stack.Screen name='panchange' component={Panchange} />
-        <Stack.Screen name="basciAstro" component={BasicAstro}/>
-        <Stack.Screen name="chart"  component={Chart}/>
-        <Stack.Screen name= "matchAsc" component={Ascendent}/>
+        <Stack.Screen name="basciAstro" component={BasicAstro} />
+        <Stack.Screen name="chart" component={Chart} />
+        <Stack.Screen name="matchAsc" component={Ascendent} />
         <Stack.Screen name="allRemedies" component={AllRemedies} />
         <Stack.Screen
           name="DailyPanchang"
@@ -299,6 +302,10 @@ const StackNavigator = (data, data1) => {
         />
         <Stack.Screen name="yeardocuments" component={YearDoucments} />
         <Stack.Screen name="productCategory" component={ProductCategory} />
+        <Stack.Screen name="Address" component={Address} options={{ headerShown: false }} />
+        <Stack.Screen name="Addaddress" component={AddAddress} options={{ headerShown: false }} />
+        <Stack.Screen name="updateaddress" component={UpdateAddress} options={{ headerShown: false }} />
+
         <Stack.Screen name="products" component={Products} />
         <Stack.Screen name='productHistory' component={ProductHistory} />
         <Stack.Screen name="productDetails" component={ProductDetails} />
@@ -309,8 +316,8 @@ const StackNavigator = (data, data1) => {
         <Stack.Screen name='astromallHistroy' component={AstromallHistroy} />
         <Stack.Screen name='bookedPoojaDetails' component={BookedPoojaDetails} />
       </Stack.Group>
-      <Stack.Screen name="OrderHistory" component={OrderHisory} options={{headerShown: false}}/>
-      <Stack.Screen name="productFull" component={Productfull} options={{headerShown: false}}/>
+      <Stack.Screen name="OrderHistory" component={OrderHisory} options={{ headerShown: false }} />
+      <Stack.Screen name="productFull" component={Productfull} options={{ headerShown: false }} />
       <Stack.Screen name="GiftOrderHistory" component={GiftOrderHistory} />
       <Stack.Screen name="logout" component={Logout} />
       <Stack.Screen name="otp" component={Otp} />
@@ -328,8 +335,8 @@ const StackNavigator = (data, data1) => {
         component={GoLive}
         options={{ headerShown: false }}
       />
-      <Stack.Screen name="newmatching" component={NewMatching1}/>
-      <Stack.Screen name="matching" component={Matching1}/>
+      <Stack.Screen name="newmatching" component={NewMatching1} />
+      <Stack.Screen name="matching" component={Matching1} />
 
       <Stack.Screen name="askAstrologer" component={AskAstrologer} />
       <Stack.Screen name="testimonials" component={Testimonials} />
@@ -337,11 +344,11 @@ const StackNavigator = (data, data1) => {
       <Stack.Screen name="setting" component={Setting} />
       <Stack.Screen name="kundli" component={Kundli} />
       {/* <Stack.Screen name="matching" component={Matching} /> */}
-      <Stack.Screen name="selectSign" component={SelectSign} options={{headerShown:false}} />
+      <Stack.Screen name="selectSign" component={SelectSign} options={{ headerShown: false }} />
       <Stack.Screen name="totalCard" component={TotalCard} />
 
       <Stack.Screen name="placeOfBirth" component={PlaceOfBirth} />
-      <Stack.Screen name='birthplace' component={PlaceOfBirth2}/>
+      <Stack.Screen name='birthplace' component={PlaceOfBirth2} />
       <Stack.Screen name="chatPickup" component={ChatPickup} />
       <Stack.Group screenOptions={{ headerShown: false }}>
         <Stack.Screen
@@ -349,7 +356,7 @@ const StackNavigator = (data, data1) => {
           component={CustomerChat}
           options={{ gestureEnabled: false }}
         />
-              <Stack.Screen name="chatIntakeForm" component={ChatIntakeForm} />
+        <Stack.Screen name="chatIntakeForm" component={ChatIntakeForm} />
         <Stack.Screen name="liveChatCall" component={LiveChatCall} />
         <Stack.Screen name="walletHistroy" component={WalletHistroy} />
         <Stack.Screen
@@ -389,7 +396,7 @@ const StackNavigator = (data, data1) => {
       <Stack.Screen name="userGuide" component={UserGuide} />
       <Stack.Screen name="blogDetailes" component={BlogDetailes} />
       <Stack.Screen name="recommendedProfile" component={RecommendedProfile} />
-      <Stack.Screen name='dailyhoro' component={daily}/>
+      <Stack.Screen name='dailyhoro' component={daily} />
       <Stack.Screen
         name="callInvoice"
         component={CallInvoice}
@@ -442,15 +449,15 @@ const StackNavigator = (data, data1) => {
       <Stack.Screen name="walletgstoffer" component={WalletGstOffer} />
       <Stack.Screen name="astroBlogsRedirect" component={AstroBlogsRedirect} />
       <Stack.Screen name="year" component={Year} />
-      <Stack.Screen name='astroBlog' component={AstroBlogs}/>
-      <Stack.Screen name='VideoInvoice' component={VideocallInvoice} options={{ headerShown: false }}/>
+      <Stack.Screen name='astroBlog' component={AstroBlogs} />
+      <Stack.Screen name='VideoInvoice' component={VideocallInvoice} options={{ headerShown: false }} />
 
-     {/* Temples Screen */}
+      {/* Temples Screen */}
 
-     <Stack.Screen name='Navgrah' component={Navgrah} options={{headerShown: false}}/>
-     <Stack.Screen name='Sanatan' component={Sanatan} options={{headerShown: false}}/>
-     <Stack.Screen name='VardaniBargad' component={VardaniBargad} options={{headerShown: false}}/>
-     <Stack.Screen name='Shivalya' component={Shivalya} options={{headerShown: false}}/>
+      <Stack.Screen name='Navgrah' component={Navgrah} options={{ headerShown: false }} />
+      <Stack.Screen name='Sanatan' component={Sanatan} options={{ headerShown: false }} />
+      <Stack.Screen name='VardaniBargad' component={VardaniBargad} options={{ headerShown: false }} />
+      <Stack.Screen name='Shivalya' component={Shivalya} options={{ headerShown: false }} />
 
     </Stack.Navigator>
   );

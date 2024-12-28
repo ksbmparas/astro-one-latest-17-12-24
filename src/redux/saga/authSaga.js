@@ -60,30 +60,27 @@ import {Alert} from 'react-native';
 
 function* onLogin(actions) {
     try {
-      const {payload} = actions;
-      console.log(payload, 'login payload');
-      
-      // Start loading
-      yield put({type: actionTypes.SET_IS_LOADING, payload: true});
-  
-      // Make the API request
-      const response = yield postRequest({
-        url: api_url + customer_login,
-        data: payload,
-      });
-      console.log(':::::response', response);
-  
-      // Handle response
-      if (response?.success) { // Correctly check the "success" key
-        yield call(navigate, 'otp', {...payload, otp: response?.otp});
-        console.log('Navigation to OTP screen successful', response);
-      } else {
-        showToastMessage({message: response?.message});
-        console.log('Error:', response?.message);
-      }
-  
-      // Stop loading
-      yield put({type: actionTypes.SET_IS_LOADING, payload: false});
+        const { payload } = actions
+        console.log(payload,'login paylod')
+        yield put({ type: actionTypes.SET_IS_LOADING, payload: true })
+        console.log(response,'all data ')
+        const response = yield postRequest({
+            url: api_url + customer_login,
+            data: payload
+        })
+        console.log(":::::response", response)
+        if (response?.success) {
+            yield call(navigate, 'otp', { ...payload, otp: response?.otp })
+        }else{
+            // Alert.alert("Astro Remedy",response?.message)
+            showToastMessage({ message: response?.message })
+            console.log('starat')
+            // showToastMessage({ message: 'Please connect your Internet connection' })
+
+        }
+
+        yield put({ type: actionTypes.SET_IS_LOADING, payload: false })
+
     } catch (e) {
       // Stop loading on error
       yield put({type: actionTypes.SET_IS_LOADING, payload: false});

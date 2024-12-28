@@ -52,3 +52,38 @@ export const removeCartItem = (cartItemId) => ({
     type: actionTypes.REMOVE_CART_ITEM,
     payload: cartItemId
 });
+
+// ----------------------------------------------
+
+export const onAddressCart = payload => ({
+    type: actionTypes.ON_ADDRESS_CART,
+    payload
+})
+
+export const getaddresscart = payload => ({
+    type: actionTypes.GET_ADDRESS_CART,
+    payload
+})
+
+export const setaddressCart =  payload => ({
+    type: actionTypes.SET_SELECTED_ADDRESS_CART,
+    payload
+})
+export const getdeleteaddresscart = payload => ({
+    type: actionTypes.GET_DELETE_CART,
+    payload
+})
+
+export const setdeleteaddresscart =  payload => ({
+    type: actionTypes.SET_DELETE_CART,
+    payload
+})
+export const getupdateaddressCart = payload => ({
+    type: actionTypes.GET_UPDATE_ADDRESS,
+    payload
+})
+
+export const setupdateaddressCart =  payload => ({
+    type: actionTypes.SET_UPDATE_ADDRESS,
+    payload
+})

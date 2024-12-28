@@ -1,7 +1,7 @@
 import { call, put, select, takeLeading } from 'redux-saga/effects'
 import * as actionTypes from '../actionTypes'
 import { getRequest, postRequest } from '../../utils/apiRequests'
-import { add_to_cart, api_url, get_customer_cart, get_mall_order_data, get_product_category, get_products, order_product, remove_cart_item, update_cart_item_quantity } from '../../config/constants'
+import { add_to_cart, api_url, create_address_cart, delete_address_cart, get_address_cart, get_customer_cart, get_mall_order_data, get_product_category, get_products, order_product, remove_cart_item, update_address_cart, update_cart_item_quantity } from '../../config/constants'
 import { navigate, resetToScreen } from '../../navigations/NavigationServices'
 import { showToastMessage } from '../../utils/services'
 import { razorpayPayment } from '../../utils/razorpay'
@@ -77,7 +77,7 @@ function* getCartData(actions) {
         const { payload } = actions
         yield put({ type: actionTypes.SET_IS_LOADING, payload: true })
         const customerData = yield select(state => state.customer.customerData)
-        console.log(customerData?._id,'idcart')
+        console.log(customerData?._id, 'idcart')
         const response = yield postRequest({
             url: api_url + get_customer_cart,
             data: {
@@ -91,7 +91,7 @@ function* getCartData(actions) {
         //                 customerId: customerData?._id
         //             },
         // });
-        console.log(response?.data,'apiii')
+        console.log(response?.data, 'apiii')
         if (response?.success) {
             yield put({ type: actionTypes.SET_CART_DATA, payload: { cart: response?.cart, totalPrice: response?.totalPrice } })
             console.log('first')
@@ -99,7 +99,7 @@ function* getCartData(actions) {
 
         yield put({ type: actionTypes.SET_IS_LOADING, payload: false })
     } catch (e) {
-        console.log(e,'api')
+        console.log(e, 'api')
         yield put({ type: actionTypes.SET_IS_LOADING, payload: false })
     }
 }
@@ -107,7 +107,7 @@ function* getCartData(actions) {
 function* updateCartQuantity(actions) {
     try {
         const { payload } = actions
-        console.log(payload,'upda')
+        console.log(payload, 'upda')
         yield put({ type: actionTypes.SET_IS_LOADING, payload: true })
         const response = yield postRequest({
             url: api_url + update_cart_item_quantity,
@@ -121,14 +121,14 @@ function* updateCartQuantity(actions) {
 
         if (response?.success) {
             yield put({ type: actionTypes.GET_CART_DATA, payload: null })
-            
-            
+
+
         }
 
         yield put({ type: actionTypes.SET_IS_LOADING, payload: false })
     } catch (e) {
-        console.log(e,'new eeoro')
-        showToastMessage({message: 'out of stock'})
+        console.log(e, 'new eeoro')
+        showToastMessage({ message: 'out of stock' })
         yield put({ type: actionTypes.SET_IS_LOADING, payload: false })
     }
 }
@@ -189,28 +189,111 @@ function* getMallOrderData(actions) {
 function* removeCartItem(actions) {
     try {
         const customerData = yield select(state => state.customer.customerData)
-        console.log(customerData?._id,'idcart')
+        console.log(customerData?._id, 'idcart')
         const { payload } = actions
-        console.log(payload,':::payyy')
+        console.log(payload, ':::payyy')
         yield put({ type: actionTypes.SET_IS_LOADING, payload: true })
         const response = yield postRequest({
             url: api_url + remove_cart_item,
             data: payload
         })
-        console.log(response,'all data')
+        console.log(response, 'all data')
         if (response?.success) {
-            showToastMessage({message: response?.message})
-            yield put({ type: actionTypes.GET_CART_DATA, payload: customerData?._id})
-            
+            showToastMessage({ message: response?.message })
+            yield put({ type: actionTypes.GET_CART_DATA, payload: customerData?._id })
+
         }
 
         yield put({ type: actionTypes.SET_IS_LOADING, payload: false })
     } catch (e) {
-        console.log(e,'new eeoro')
-        showToastMessage({message: 'out of stock'})
+        console.log(e, 'new eeoro')
+        showToastMessage({ message: 'out of stock' })
         yield put({ type: actionTypes.SET_IS_LOADING, payload: false })
     }
 }
+
+
+// ----------------------------------------------
+
+function* onAddressCart(actions) {
+    try {
+        const { payload } = actions;
+
+        console.log("check payload::::", payload);
+        
+        const response = yield axios.post(api_url + create_address_cart, payload);
+        // const response = yield axios.post(`https://astrooneapi.ksdelhi.net/api/ecommerce/create_address_cart`, payload);
+
+        console.log(response, "sjbdnfksdhfisdhbfjkd");
+
+        if (response?.data?.success) {
+            showToastMessage({ message: "Address data Successfully" });
+            yield put({ type: actionTypes.GET_ADDRESS_CART, payload: null });
+            resetToScreen('Address');
+        }
+
+        console.log("asdfdsfsddsafsdfsdff:::::::", response?.data?.success);
+        
+
+    } catch (e) {
+        console.log(e);
+    }
+}
+
+function* getAddressCart(actions) {
+    try {
+        const { payload } = actions;
+        const customerdata = yield select(state => state.customer.customerData);
+
+        const response = yield axios.post(api_url + get_address_cart, { customerId: customerdata?._id });
+        // const response = yield axios.post(`https://astrooneapi.ksdelhi.net/api/ecommerce/get_address_cart`, { customerId: customerdata?._id });
+        console.log('Response ::: ', response?.data);
+        if (response) {
+            yield put({ type: actionTypes.SET_ADDRESS_CART, payload: response?.data });
+            showToastMessage({ message: "Address data Successfully" });
+        } else {
+            yield put({ type: actionTypes.SET_ADDRESS_CART, payload: [] });
+            showToastMessage({ message: "No Address data found" });
+        }
+
+    } catch (e) {
+        console.log(e);
+    }
+}
+
+function* getDeleteAddressCart(actions) {
+    try {
+        const { payload } = actions;
+        console.log(payload, "payload")
+        const response = yield axios.post(api_url + delete_address_cart, payload);
+        console.log('Response ::: ', response);
+        if (response) {
+            yield put({ type: actionTypes.GET_ADDRESS_CART });
+            showToastMessage({ message: "Delete Successfully" });
+        }
+
+    } catch (e) {
+        console.log(e, "sdl;kfjlsdnfl");
+    }
+}
+
+function* getUpdateAddressCart(actions) {
+    try {
+        const { payload } = actions;
+        console.log(payload, "payload")
+        const response = yield axios.post(api_url + update_address_cart, payload);
+        console.log('Response ::: ', response);
+        if (response) {
+            yield put({ type: actionTypes.GET_ADDRESS_CART, payload: null });
+            resetToScreen('Address');
+            showToastMessage({ message: "Update Successfully" });
+        }
+
+    } catch (e) {
+        console.log(e);
+    }
+}
+
 
 export default function* ecommerceSaga() {
     yield takeLeading(actionTypes.GET_PRODUCT_CATEGORY, getProductCategory)
@@ -221,4 +304,10 @@ export default function* ecommerceSaga() {
     yield takeLeading(actionTypes.ORDER_CART, orderCart)
     yield takeLeading(actionTypes.GET_MALL_ORDER_DATA, getMallOrderData)
     yield takeLeading(actionTypes.REMOVE_CART_ITEM, removeCartItem)
+
+    yield takeLeading(actionTypes.ON_ADDRESS_CART, onAddressCart);
+    yield takeLeading(actionTypes.GET_ADDRESS_CART, getAddressCart);
+    yield takeLeading(actionTypes.GET_DELETE_CART, getDeleteAddressCart);
+    yield takeLeading(actionTypes.GET_UPDATE_ADDRESS, getUpdateAddressCart);
+
 }

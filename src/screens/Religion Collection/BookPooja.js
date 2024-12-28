@@ -55,11 +55,7 @@ const BookPooja = () => {
             <TouchableOpacity
               style={styles.touchable}
               onPress={() =>
-                navigation.navigate('PoojaDetail', {
-                  image: poojaImages[item],
-                  name: poojaDetails[item].name,
-                  price: poojaDetails[item].price,
-                })
+                navigation.navigate('PoojaDetail')
               }
             >
               <View style={styles.imageContainer}>
@@ -119,8 +115,9 @@ const styles = StyleSheet.create({
     height: responsiveScreenWidth(60),
     alignItems: 'center',
     backgroundColor: colors.white_color,
-    borderRadius: 15,
-    elevation: 4,
+    borderRadius: 5,
+    // elevation: 4,
+    borderWidth: 0.2,
   },
   touchableImage: {
     width: responsiveScreenWidth(44),

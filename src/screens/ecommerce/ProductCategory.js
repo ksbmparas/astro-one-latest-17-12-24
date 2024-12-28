@@ -14,8 +14,8 @@ import { img_url } from '../../config/constants'
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import { navigate } from '../../NavigationService'
 
-const ProductCategory = ({ navigation, productCategoryData, dispatch,cartData }) => {
-    console.log(cartData?.cart?.length,'ccdatad')
+const ProductCategory = ({ navigation, productCategoryData, dispatch, cartData }) => {
+    console.log(cartData?.cart?.length, 'ccdatad')
 
     useEffect(() => {
         dispatch(EcommerceActions.getProductCategory())
@@ -60,44 +60,46 @@ const ProductCategory = ({ navigation, productCategoryData, dispatch,cartData })
         )
     }
     function header() {
-        return(
-            <View style={{backgroundColor:Colors.primaryLight,flexDirection:'row',justifyContent:'space-between',alignItems:'center',paddingBottom:Sizes.fixPadding * 0.7}}>
-                   <TouchableOpacity
-          onPress={() => {
-            navigation.goBack();
-          }}
-          style={{
-            flex: 0,
-            width: '15%',
-            justifyContent: 'center',
-            alignItems: 'center',
-          }}>
-          <Ionicons
-            name="arrow-back"
-            color={colors.white_color}
-            size={getFontSize(2.5)}
-          />
-        </TouchableOpacity>
-                <Text style={{   fontSize: getFontSize(1.7),
-              color: colors.white_color,
-              fontFamily: fonts.medium,}}>Astro Mall</Text>
-               <TouchableOpacity
-          onPress={() => {navigation.navigate('cart')}}
-          style={{
-            flex: 0,
-            width: '15%',
-            justifyContent: 'center',
-            alignItems: 'center',
-          }}>
-          <Ionicons
-            name="cart-outline"
-            color={colors.white_color}
-            size={27}
-          />
-          {/* <View style={{height:SCREEN_WIDTH * 0.04,width:SCREEN_WIDTH*0.04,borderWidth:1,borderRadius:100,justifyContent:'center',alignItems:'center',position:'absolute',right: Sizes.fixPadding,bottom:Sizes.fixPadding * 1.2,backgroundColor:Colors.primaryLight,borderColor:Colors.white}}>
+        return (
+            <View style={{ backgroundColor: Colors.primaryLight, flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', paddingBottom: Sizes.fixPadding * 0.7 }}>
+                <TouchableOpacity
+                    onPress={() => {
+                        navigation.goBack();
+                    }}
+                    style={{
+                        flex: 0,
+                        width: '15%',
+                        justifyContent: 'center',
+                        alignItems: 'center',
+                    }}>
+                    <Ionicons
+                        name="arrow-back"
+                        color={colors.white_color}
+                        size={getFontSize(2.5)}
+                    />
+                </TouchableOpacity>
+                <Text style={{
+                    fontSize: getFontSize(1.7),
+                    color: colors.white_color,
+                    fontFamily: fonts.medium,
+                }}>Astro Mall</Text>
+                <TouchableOpacity
+                    onPress={() => { navigation.navigate('cart') }}
+                    style={{
+                        flex: 0,
+                        width: '15%',
+                        justifyContent: 'center',
+                        alignItems: 'center',
+                    }}>
+                    <Ionicons
+                        name="cart-outline"
+                        color={colors.white_color}
+                        size={27}
+                    />
+                    {/* <View style={{height:SCREEN_WIDTH * 0.04,width:SCREEN_WIDTH*0.04,borderWidth:1,borderRadius:100,justifyContent:'center',alignItems:'center',position:'absolute',right: Sizes.fixPadding,bottom:Sizes.fixPadding * 1.2,backgroundColor:Colors.primaryLight,borderColor:Colors.white}}>
             <Text style={{color:Colors.white,fontSize:8}}>{cartData?.cart?.length}</Text>
           </View> */}
-        </TouchableOpacity>
+                </TouchableOpacity>
             </View>
         )
     }
