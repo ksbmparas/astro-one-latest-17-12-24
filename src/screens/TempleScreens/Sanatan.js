@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect } from 'react';
+import React, { useState, useRef, useEffect, useCallback } from 'react';
 import {
     SafeAreaView,
     StyleSheet,
@@ -18,6 +18,7 @@ import { useNavigation } from '@react-navigation/native';
 import {
     GestureHandlerRootView,
     PanGestureHandler,
+    State
 } from 'react-native-gesture-handler';
 import {
     useAnimatedGestureHandler,
@@ -26,8 +27,9 @@ import {
     withTiming,
     Easing,
 } from 'react-native-reanimated';
+
 // import Animated, { withRepeat } from 'react-native-reanimated';
-import Sound from 'react-native-sound';
+import Sound, { setCategory } from 'react-native-sound';
 import { colors, img_url, new_img_url } from '../../config/Constants1';
 import { color } from '@rneui/base';
 import { Fonts, Sizes } from '../../assets/style';
@@ -42,9 +44,60 @@ import Ionicons from 'react-native-vector-icons/Ionicons';
 import LottieView from 'lottie-react-native';
 import AjkaPradhan from './Components/AjkaPradhan';
 
-
-
 const Sanatan = ({ sanatangif, dispatch, getbaghwandata, getcategorydata, mudradata }) => {
+    const [bellSound, setBellSound] = useState(null);
+    const [isSwinging, setIsSwinging] = useState(false);
+    const rotateValue = useState(new Animated.Value(0))[0];
+    useEffect(() => {
+        return () => {
+            rotateValue.stopAnimation();
+        };
+    }, [rotateValue]);
+    useEffect(() => {
+        const sound = new Sound(require('../../assets/audio/bell_sound.mp3'), Sound.MAIN_BUNDLE, (error) => {
+            if (error) {
+                console.log('Error loading sound:', error);
+            }
+        });
+        setBellSound(sound);
+
+        return () => {
+            if (sound) {
+                sound.release();
+            }
+        };
+    }, []);
+    const playBellSound = () => {
+        if (bellSound) {
+            bellSound.play((success) => {
+                if (success) {
+                    console.log('Successfully played sound');
+                } else {
+                    console.log('Sound play failed');
+                }
+            });
+        }
+        if (!isSwinging) {
+            setIsSwinging(true);
+            Animated.sequence([
+                Animated.timing(rotateValue, {
+                    toValue: 1,
+                    duration: 500,
+                    useNativeDriver: true,
+                }),
+                Animated.timing(rotateValue, {
+                    toValue: -1,
+                    duration: 500,
+                    useNativeDriver: true,
+                }),
+
+            ]).start()
+        }
+    };
+    const rotate = rotateValue.interpolate({
+        inputRange: [-1, 1],
+        outputRange: ['-20deg', '20deg'],
+    });
     const translateY = useRef(new Animated.Value(-200)).current;
     useEffect(() => {
         Animated.loop(
@@ -58,15 +111,10 @@ const Sanatan = ({ sanatangif, dispatch, getbaghwandata, getcategorydata, mudrad
         ).start();
     }, []);
 
-
     const navigation = useNavigation();
     const customerData = useSelector((state) => state.customer.customerData);
-    console.log(getcategorydata, "getcategorydata")
-    const [selectedIndex, setSelectedIndex] = useState(0);
     const [showLottieMudra, setShowLottieMudra] = useState(false);
     const [localBalance, setLocalBalance] = useState(mudradata?.balance || 0);
-
-    const flatListRef = useRef(null);
     const refRBSheet = useRef(null);
     useEffect(() => {
         const data = {
@@ -83,15 +131,7 @@ const Sanatan = ({ sanatangif, dispatch, getbaghwandata, getcategorydata, mudrad
         dispatch(HomeActions.getBaghwanData());
         dispatch(HomeActions.getPoojaCategory())
     }, [dispatch]);
-    const handleImagePress = (index) => {
-        setSelectedIndex(index);
 
-        flatListRef.current?.scrollToIndex({
-            index,
-            animated: true,
-            viewPosition: 0.5,
-        });
-    };
 
     const lotaArpan = () => {
         const data = {
@@ -110,8 +150,9 @@ const Sanatan = ({ sanatangif, dispatch, getbaghwandata, getcategorydata, mudrad
     }
     const [activeCategoryId, setActiveCategoryId] = useState(getcategorydata && getcategorydata.length > 0 ? getcategorydata[0]._id : null);
     const [flowerImage, setFlowerImage] = useState();
-    const foolArpan = (itemName, payment, itemPrice,itemImage) => {
+    const foolArpan = (itemName, payment, itemPrice, itemImage) => {
         setFlowerImage(itemImage)
+        
         const isAdd = payment === "add";
         const data = {
             userId: customerData?._id,
@@ -133,102 +174,172 @@ const Sanatan = ({ sanatangif, dispatch, getbaghwandata, getcategorydata, mudrad
         setTimeout(() => {
             setShowShower(false);
         }, 2000);
-        
-    }
 
+    }
+    const thaliArpan = (itemName, payment, itemPrice, itemImage) => {
+        setMyThali(itemImage)
+        const isAdd = payment === "add";
+        const data = {
+            userId: customerData?._id,
+            gifts: itemName,
+            credit: isAdd ? itemPrice : "0",
+            debited: isAdd ? "0" : itemPrice,
+        }
+
+        console.log("data", data)
+        dispatch(HomeActions.getLotaMudra(data));
+        setShowLottieMudra(true)
+        setLocalBalance((prevBalance) =>
+            isAdd ? prevBalance + itemPrice : Math.max(prevBalance - itemPrice, 0)
+        );
+       
+        setTimeout(() => {
+            setShowLottieMudra(false);
+        }, 2000);
+        
+
+    }
+    const [selectedImages, setSelectedImages] = useState([]);
+    const [visibleIndex, setVisibleIndex] = useState(0);
+    const [images, setImages] = useState([]);
+    console.log("images:::>>",images)
+    const onGestureEvent = useCallback(
+        ({ nativeEvent }) => {
+            // console.log("Gesture Event:", nativeEvent);
+            const { translationY, state } = nativeEvent;
+
+            if (state === 4) {
+                if (translationY < -30) {
+                    setVisibleIndex((prevIndex) => {
+                        const newIndex = prevIndex < images.length - 1 ? prevIndex + 1 : 0;
+                        return newIndex;
+                    });
+                } else if (translationY > 30) {
+                    setVisibleIndex((prevIndex) => {
+                        const newIndex = prevIndex > 0 ? prevIndex - 1 : images.length - 1;
+                        return newIndex;
+                    });
+                }
+            }
+        },
+        [images.length]
+    );
+
+    useEffect(() => {
+
+        setImages(selectedImages);
+    }, [selectedImages]);
+    const handleItemPress = (item) => {
+        
+        setSelectedImages(item.bulkImageUpload);
+    };
+    useEffect(() => {
+        if (getbaghwandata.length > 0) {
+          handleItemPress(getbaghwandata[0]);  
+        }
+      }, [getbaghwandata]);
+
+
+//Thali
+const [myThali, setMyThali] = useState();
+console.log("myThali",myThali)
     const renderItem = ({ item, index }) => (
-        <TouchableOpacity
-            onPress={() => handleImagePress(index)}
-            style={[styles.UpperFlatlistImageContainer]}>
-            <View
-                style={[
-                    styles.UpperFlatlistImageContainer2,
-                    selectedIndex === index && {
-                        borderWidth: 1,
-                        borderColor: Colors.grayA,
-                        borderRadius: 20,
-                        borderRadius: SCREEN_WIDTH * 0.07,
-                    },
-                ]}>
-                <Image
-                    resizeMode="cover"
-                    source={{ uri: new_img_url + item?.image }}
-                    style={[styles.flatListImage,]}
-                />
-            </View>
-        </TouchableOpacity>
+        <View>
+            <TouchableOpacity
+                onPress={() => handleItemPress(item)}
+                style={[styles.UpperFlatlistImageContainer]}>
+                <View
+                    style={[
+                        styles.UpperFlatlistImageContainer2,
+                        {
+                            borderWidth: 1,
+                            borderColor: Colors.grayA,
+                            borderRadius: 20,
+                            borderRadius: SCREEN_WIDTH * 0.07,
+                        },
+                    ]}>
+                    <Image
+                        resizeMode="cover"
+                        source={{ uri: new_img_url + item?.image }}
+                        style={[styles.flatListImage,]}
+                    />
+                </View>
+
+            </TouchableOpacity>
+
+        </View>
     );
     const [showShower, setShowShower] = useState(false);
     return (
         <GestureHandlerRootView>
             {showShower && (
-                <View style={{ position: "absolute",top:0 }}>
+                <View style={{ position: "absolute", top: 0 }}>
                     <Animated.Image
-                        source={{uri: new_img_url+ flowerImage}}
+                        source={{ uri: new_img_url + flowerImage }}
                         style={[styles.flower, { transform: [{ translateY }], left: responsiveScreenHeight(1) }]}
                     />
                     <Animated.Image
-                        source={{uri: new_img_url+ flowerImage}}
+                        source={{ uri: new_img_url + flowerImage }}
                         style={[styles.flower, { transform: [{ translateY }], left: responsiveScreenHeight(10), }]}
                     />
                     <Animated.Image
-                        source={{uri: new_img_url+ flowerImage}}
+                        source={{ uri: new_img_url + flowerImage }}
                         style={[styles.flower, { transform: [{ translateY }], left: responsiveScreenHeight(2), }]}
                     />
                     <Animated.Image
-                         source={{uri: new_img_url+ flowerImage}}
+                        source={{ uri: new_img_url + flowerImage }}
                         style={[styles.flower, { transform: [{ translateY }], left: responsiveScreenHeight(4), }]}
                     />
                     <Animated.Image
-                        source={{uri: new_img_url+ flowerImage}}
+                        source={{ uri: new_img_url + flowerImage }}
                         style={[styles.flower, { transform: [{ translateY }], left: responsiveScreenHeight(12), }]}
                     />
                     <Animated.Image
-                         source={{uri: new_img_url+ flowerImage}}
+                        source={{ uri: new_img_url + flowerImage }}
                         style={[styles.flower, { transform: [{ translateY }], left: responsiveScreenHeight(10), }]}
                     />
                     <Animated.Image
-                        source={{uri: new_img_url+ flowerImage}}
+                        source={{ uri: new_img_url + flowerImage }}
                         style={[styles.flower, { transform: [{ translateY }], left: responsiveScreenHeight(16), }]}
                     />
                     <Animated.Image
-                         source={{uri: new_img_url+ flowerImage}}
+                        source={{ uri: new_img_url + flowerImage }}
                         style={[styles.flower, { transform: [{ translateY }], top: responsiveScreenHeight(-12), left: responsiveScreenHeight(18), }]}
                     />
                     <Animated.Image
-                         source={{uri: new_img_url+ flowerImage}}
+                        source={{ uri: new_img_url + flowerImage }}
                         style={[styles.flower, { transform: [{ translateY }], top: responsiveScreenHeight(-28), left: responsiveScreenHeight(24), }]}
                     />
                     <Animated.Image
-                        source={{uri: new_img_url+ flowerImage}}
+                        source={{ uri: new_img_url + flowerImage }}
                         style={[styles.flower, { transform: [{ translateY }], top: responsiveScreenHeight(-22), left: responsiveScreenHeight(24), }]}
                     />
                     <Animated.Image
-                       source={{uri: new_img_url+ flowerImage}}
+                        source={{ uri: new_img_url + flowerImage }}
                         style={[styles.flower, { transform: [{ translateY }], top: responsiveScreenHeight(-42), left: responsiveScreenHeight(24), }]}
                     />
                     <Animated.Image
-                        source={{uri: new_img_url+ flowerImage}}
+                        source={{ uri: new_img_url + flowerImage }}
                         style={[styles.flower, { transform: [{ translateY }], top: responsiveScreenHeight(-46), left: responsiveScreenHeight(24), }]}
                     />
                     <Animated.Image
-                         source={{uri: new_img_url+ flowerImage}}
+                        source={{ uri: new_img_url + flowerImage }}
                         style={[styles.flower, { transform: [{ translateY }], top: responsiveScreenHeight(-36), left: responsiveScreenHeight(30), }]}
                     />
                     <Animated.Image
-                        source={{uri: new_img_url+ flowerImage}}
+                        source={{ uri: new_img_url + flowerImage }}
                         style={[styles.flower, { transform: [{ translateY }], top: responsiveScreenHeight(-36), left: responsiveScreenHeight(40), }]}
                     />
                     <Animated.Image
-                        source={{uri: new_img_url+ flowerImage}}
+                        source={{ uri: new_img_url + flowerImage }}
                         style={[styles.flower, { transform: [{ translateY }], top: responsiveScreenHeight(-56), left: responsiveScreenHeight(30), }]}
                     />
                     <Animated.Image
-                        source={{uri: new_img_url+ flowerImage}}
+                        source={{ uri: new_img_url + flowerImage }}
                         style={[styles.flower, { transform: [{ translateY }], top: responsiveScreenHeight(-47), left: responsiveScreenHeight(35), }]}
                     />
                     <Animated.Image
-                        source={{uri: new_img_url+ flowerImage}}
+                        source={{ uri: new_img_url + flowerImage }}
                         style={[styles.flower, { transform: [{ translateY }], top: responsiveScreenHeight(-57), left: responsiveScreenHeight(35), }]}
                     />
                 </View>
@@ -241,24 +352,52 @@ const Sanatan = ({ sanatangif, dispatch, getbaghwandata, getcategorydata, mudrad
                     style={[styles.templeImage, { pointerEvents: 'box-none' }]}
                     resizeMode="cover">
                     <View>
-                        <Image source={require('../../assets/images/Bell.png')}
+
+                        <TouchableOpacity onPress={playBellSound}
                             style={{
-                                height: SCREEN_HEIGHT * 0.14,
-                                width: SCREEN_WIDTH * 0.1,
                                 position: "absolute",
                                 top: SCREEN_HEIGHT * 0.35,
                                 left: SCREEN_WIDTH * 0.22,
+                                zIndex: 9999,
                             }}
-                        />
-                        <Image source={require('../../assets/images/Bell.png')}
+                        >
+                            <Animated.View
+                                style={{
+                                    transform: [{ rotate }],
+                                }}
+                            >
+                                <Image source={require('../../assets/images/Bell.png')}
+                                    style={{
+                                        height: SCREEN_HEIGHT * 0.14,
+                                        width: SCREEN_WIDTH * 0.1,
+
+                                    }}
+                                />
+                            </Animated.View>
+                        </TouchableOpacity>
+
+                        <TouchableOpacity onPress={playBellSound}
                             style={{
-                                height: SCREEN_HEIGHT * 0.14,
-                                width: SCREEN_WIDTH * 0.1,
                                 position: "absolute",
                                 top: SCREEN_HEIGHT * 0.35,
                                 right: SCREEN_WIDTH * 0.22,
+                                zIndex: 99999,
                             }}
-                        />
+                        >
+                            <Animated.View
+                                style={{
+                                    transform: [{ rotate }],
+                                }}
+                            >
+                                <Image source={require('../../assets/images/Bell.png')}
+                                    style={{
+                                        height: SCREEN_HEIGHT * 0.14,
+                                        width: SCREEN_WIDTH * 0.1,
+
+                                    }}
+                                />
+                            </Animated.View>
+                        </TouchableOpacity>
                     </View>
                     <View style={{ display: "flex", alignItems: "center", flexDirection: "row", justifyContent: "space-between", paddingHorizontal: 10, paddingVertical: 10, }}>
                         <View>
@@ -303,17 +442,9 @@ const Sanatan = ({ sanatangif, dispatch, getbaghwandata, getcategorydata, mudrad
 
                     </View>
                     <View style={styles.activeImageContainer}>
-                        {/* <Image
-                            source={{
-                                uri: new_img_url + getbaghwandata[selectedIndex]?.image,
-                            }}
-                            style={styles.centeredImage}
-                            resizeMode="contain"
-                        /> */}
                     </View>
                     <View>
                         <FlatList
-                            ref={flatListRef}
                             data={getbaghwandata}
                             renderItem={renderItem}
                             keyExtractor={(item) => item.id}
@@ -326,20 +457,41 @@ const Sanatan = ({ sanatangif, dispatch, getbaghwandata, getcategorydata, mudrad
                                 offset: SCREEN_WIDTH * 0.13 * index,
                                 index,
                             })}
+
                         />
+                        <PanGestureHandler onGestureEvent={onGestureEvent}>
+                            <FlatList
+                                data={[images[visibleIndex]]}
+                                renderItem={({ item }) => {
+                                    console.log("Image URI:", new_img_url + item);
+                                    return (
+                                        <Image
+                                            source={{ uri: new_img_url + item }}
+                                            style={styles.centerNewImage}
+                                        />
+                                    );
+                                }}
+                                keyExtractor={(item, index) => `${index}-${visibleIndex}`}
+                                horizontal={false}
+                                scrollEnabled={false}
+                            />
+                        </PanGestureHandler>
+
+
                     </View>
                     <TouchableOpacity style={styles.thaliView}
                         onPress={() => {
                             refRBSheet.current?.open();
 
                         }}
+
                     >
-                        <Image source={require('../../assets/images/AARTITHALI.png')} style={styles.thali} />
+                        <Image
+                         source={myThali ? { uri: new_img_url + myThali } : require('../../assets/images/AARTITHALI.png')}
+                         style={styles.thali} />
                     </TouchableOpacity>
 
-                    <View style={{ position: "absolute", alignSelf: 'center', bottom: 10 }}>
-                        <AjkaPradhan />
-                    </View>
+                   
                     <View style={{ position: "absolute", bottom: SCREEN_HEIGHT * 0.16, left: SCREEN_WIDTH * 0.03, display: "flex", flexDirection: "column", gap: 15 }}>
                         <TouchableOpacity
 
@@ -384,6 +536,9 @@ const Sanatan = ({ sanatangif, dispatch, getbaghwandata, getcategorydata, mudrad
                                 style={{ width: responsiveScreenWidth(15), height: responsiveScreenHeight(7) }} />
                         </TouchableOpacity>
                     </View>
+                    <View style={{ position: "absolute", alignSelf: 'center', bottom: 10 }}>
+                        <AjkaPradhan />
+                    </View>
                 </ImageBackground>
                 <RBSheet
                     ref={refRBSheet}
@@ -421,7 +576,9 @@ const Sanatan = ({ sanatangif, dispatch, getbaghwandata, getcategorydata, mudrad
                                             styles.categoryTab,
                                             activeCategoryId === item._id && styles.activeTab,
                                         ]}
-                                        onPress={() => setActiveCategoryId(item._id)}
+                                        onPress={() =>{
+                                             setActiveCategoryId(item._id)
+                                            }}
                                     >
                                         <Text
                                             style={[
@@ -444,7 +601,15 @@ const Sanatan = ({ sanatangif, dispatch, getbaghwandata, getcategorydata, mudrad
                                     <View style={styles.itemContainer}>
                                         <TouchableOpacity
                                             onPress={() => {
-                                                foolArpan(item?.itemName, item?.payment, item?.itemPrice,item?.itemImage);
+                                                console.log("itemName",item?.title)
+                                                if(item?.title ==="THALI"){
+                                                    thaliArpan(item?.itemName, item?.payment, item?.itemPrice, item?.itemImage);
+                                                }else{
+                                                    foolArpan(item?.itemName, item?.payment, item?.itemPrice, item?.itemImage);
+
+                                                }
+                                                
+                                               
                                             }}
                                         >
 
@@ -710,8 +875,9 @@ const styles = StyleSheet.create({
         alignItems: 'center',
     },
     thali: {
-        width: responsiveScreenWidth(28),
+        width: responsiveScreenWidth(58),
         height: responsiveScreenHeight(13),
+        objectFit:"contain"
     },
     thaliView: {
         position: "absolute",
@@ -768,4 +934,15 @@ const styles = StyleSheet.create({
         zIndex: 999,
         objectFit: "contain"
     },
+    centerNewImage: {
+        width: SCREEN_WIDTH * 0.5,
+        height: SCREEN_HEIGHT * 0.28,
+        // position: "absolute",
+
+        left: SCREEN_WIDTH * 0.26,
+        marginTop: SCREEN_HEIGHT * 0.19,
+        borderRadius: 20,
+        objectFit: "contain"
+
+    }
 });
