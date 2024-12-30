@@ -417,7 +417,7 @@ function CustomDrawerContent(props) {
               />
             </View>
 
-            <Text style={styles.DrawerText}>Customers Testimonials</Text>
+            <Text style={styles.DrawerText}>Customer Testimonials</Text>
           </TouchableOpacity>
 
           <TouchableOpacity
@@ -844,7 +844,7 @@ function CustomDrawerContent(props) {
 
             <View style={{ alignItems: "center", gap: 8 }}>
               <Text style={{ ...Fonts.PoppinsRegular }}>Connect the cosmic dots</Text>
-              <Text style={{ ...Fonts.PoppinsRegular }}>Folllow AstroOne for exclusive updates on:</Text>
+              <Text style={{ ...Fonts.PoppinsRegular }}>Follow AstroOne for exclusive updates on:</Text>
             </View>
 
             <View style={{ flexDirection: "row", alignItems: "center", justifyContent: "space-between", paddingHorizontal: SCREEN_WIDTH * 0.12, paddingVertical: SCREEN_HEIGHT * 0.02 }}>

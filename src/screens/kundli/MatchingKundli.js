@@ -18,7 +18,7 @@ import { connect } from 'react-redux';
 
 const Tab = createMaterialTopTabNavigator();
 
-const Kundli = props => {
+const MatchingKundli = props => {
   const { t } = useTranslation()
   useEffect(() => {
     props.navigation.setOptions({
@@ -66,4 +66,4 @@ const Kundli = props => {
 
 const mapDispatchToProps = dispatch => ({ dispatch })
 
-export default connect(null, mapDispatchToProps)(Kundli);
+export default connect(null, mapDispatchToProps)(MatchingKundli);

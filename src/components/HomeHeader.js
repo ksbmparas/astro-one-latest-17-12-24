@@ -153,23 +153,23 @@ const HomeHeader = props => {
           onPress={() => props.navigation.navigate('wallet')}
           style={styles.walletContainer}>
           <View style={styles.walletIconContainer}>
-          <View style={{alignItems:"center",justifyContent:"center", width: SCREEN_WIDTH*0.06, height: SCREEN_HEIGHT*0.028,}}>
-        <FastImage
-                
-                style={{ width: SCREEN_WIDTH*0.06, height: SCREEN_HEIGHT*0.023 ,resizeMode:"contain"}}
+            <View style={{ alignItems: "center", justifyContent: "center", width: SCREEN_WIDTH * 0.06, height: SCREEN_HEIGHT * 0.028, }}>
+              <FastImage
+
+                style={{ width: SCREEN_WIDTH * 0.06, height: SCREEN_HEIGHT * 0.023, resizeMode: "contain" }}
                 source={require('../assets/gifs/wallet_gif.gif')}
                 resizeMode={FastImage.resizeMode.cover}
               />
-        </View>
-              
+            </View>
+
           </View>
           <View>
-            <Text style={styles.walletText}>{showNumber0(props.customerData?.wallet_balance ?? 0)}</Text>
+            <Text style={styles.walletText}>₹ {showNumber0(props.customerData?.wallet_balance ?? 0)}</Text>
           </View>
 
-        </TouchableOpacity>           
-        
-      
+        </TouchableOpacity>
+
+
       </View>
     </View>
   );
@@ -206,12 +206,14 @@ const styles = StyleSheet.create({
   },
   walletContainer: {
     flexDirection: "row", borderWidth: 1,
-     width: SCREEN_WIDTH * 0.2,
-      height: SCREEN_HEIGHT * 0.04, 
-      alignItems: "center",
-       gap: 2, borderRadius: 20,
-        borderColor: colors.background_theme2,
-         backgroundColor: '#FFDBBB', gap: 5
+    width: SCREEN_WIDTH * 0.24,
+    height: SCREEN_HEIGHT * 0.04,
+    alignItems: "center",
+    gap:4,
+    borderRadius: 20,
+    borderColor: colors.background_theme2,
+    backgroundColor: '#FFDBBB',
+    alignSelf:"center"
 
   },
   walletContent: {
@@ -223,18 +225,18 @@ const styles = StyleSheet.create({
 
   },
   walletIconContainer: {
-    borderWidth: 1, 
+    borderWidth: 1,
     borderRadius: 20,
-     paddingHorizontal: SCREEN_WIDTH * 0.01,
-      height: SCREEN_HEIGHT * 0.038,
-       alignItems: "center", 
-       justifyContent: "center",
-        backgroundColor: "white",
-         borderColor: colors.background_theme2
+    paddingHorizontal: SCREEN_WIDTH * 0.01,
+    height: SCREEN_HEIGHT * 0.038,
+    alignItems: "center",
+    justifyContent: "center",
+    backgroundColor: "white",
+    borderColor: colors.background_theme2
   },
   walletText: {
-    fontSize: 14,
-     fontWeight: "500", 
-     color: colors.background_theme2
+    fontSize: 15,
+    fontWeight: "500",
+    color: colors.background_theme2
   },
 });

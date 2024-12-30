@@ -39,7 +39,7 @@ const genderData = [
 ];
 
 
-const NewKundli = ({customerData, navigation, locationData, dispatch, isLoading }) => {
+const NewKundli = ({ customerData, navigation, locationData, dispatch, isLoading }) => {
   const { t } = useTranslation();
   const [name, setName] = useState('');
   const [dob, setDob] = useState(null);
@@ -47,7 +47,7 @@ const NewKundli = ({customerData, navigation, locationData, dispatch, isLoading 
   const [tob, setTob] = useState(null);
   const [tobVisible, setTobVisible] = useState(false);
   const [gender, setGender] = useState("male");
-  
+
   // console.log('customerData==',locationData?.lat);
 
   useEffect(() => {
@@ -74,10 +74,10 @@ const NewKundli = ({customerData, navigation, locationData, dispatch, isLoading 
     setTobVisible(false);
   };
 
-  
-// String Validation 
+
+  // String Validation 
   const isStringInValid = (string) => {
-  return !string || !string?.trim() || !/^[a-zA-Z ]+$/.test(string)
+    return !string || !string?.trim() || !/^[a-zA-Z ]+$/.test(string)
   }
 
   const create_kundli = async () => {
@@ -85,11 +85,11 @@ const NewKundli = ({customerData, navigation, locationData, dispatch, isLoading 
       warnign_toast('Please enter name.');
 
     }
-     else if (isStringInValid(name)) {
+    else if (isStringInValid(name)) {
       warnign_toast('Please enter correct name.');
 
     }
-     else if (dob == null) {
+    else if (dob == null) {
       warnign_toast('Please select date of birth.');
 
     } else if (tob == null) {
@@ -105,7 +105,7 @@ const NewKundli = ({customerData, navigation, locationData, dispatch, isLoading 
         lat: locationData?.lat,
         lon: locationData?.lon,
       }
-      console.log(payload,'payload kundli')
+      console.log(payload, 'payload kundli')
       setName('')
       setDob(null)
       setGender('male')
@@ -117,10 +117,10 @@ const NewKundli = ({customerData, navigation, locationData, dispatch, isLoading 
   };
 
   return (
-    <ImageBackground  style={{flex:1}}
-    source={require('../../assets/images/kundlibg.jpg')}
-   
->
+    <ImageBackground style={{ flex: 1 }}
+      source={require('../../assets/images/kundlibg.jpg')}
+
+    >
       <MyLoader isVisible={isLoading} />
       <View style={styles.container}>
         <View style={styles.inputContainer}>
@@ -158,7 +158,7 @@ const NewKundli = ({customerData, navigation, locationData, dispatch, isLoading 
             {locationData ? locationData?.address : t("place_of_birth")}
           </Text>
         </TouchableOpacity>
-         {/* <View style={styles.inputContainer}
+        {/* <View style={styles.inputContainer}
          >
           <MaterialCommunityIcons
             name="map-marker"
@@ -300,13 +300,13 @@ const NewKundli = ({customerData, navigation, locationData, dispatch, isLoading 
           </View>
         </View>
         <TouchableOpacity onPress={create_kundli} style={styles.buttonContainer}>
-          <Image 
-          style={{height:SCREEN_HEIGHT*0.02,width:SCREEN_WIDTH*0.5}}
-          source={require('../../assets/images/goldenthing.png')}/>
+          <Image
+            style={{ height: SCREEN_HEIGHT * 0.02, width: SCREEN_WIDTH * 0.5 }}
+            source={require('../../assets/images/goldenthing.png')} />
           <Text allowFontScaling={false} style={styles.buttonText}>{t("Get Your Kundli")}</Text>
-          <Image 
-          style={{height:SCREEN_HEIGHT*0.02,width:SCREEN_WIDTH*0.5, transform: [{ rotate: '180deg' }]}}
-          source={require('../../assets/images/goldenthing.png')}/>
+          <Image
+            style={{ height: SCREEN_HEIGHT * 0.02, width: SCREEN_WIDTH * 0.5, transform: [{ rotate: '180deg' }] }}
+            source={require('../../assets/images/goldenthing.png')} />
         </TouchableOpacity>
       </View>
     </ImageBackground>
@@ -340,7 +340,7 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.3,
     shadowRadius: 5,
     padding: 15,
-    
+
 
   },
   buttonContainer: {
@@ -356,7 +356,7 @@ const styles = StyleSheet.create({
   buttonText: {
     fontSize: getFontSize(1.3),
     color: colors.black_color,
-   fontWeight:"500",
+    fontWeight: "500",
     textAlign: 'center',
   },
   inputContainer: {
@@ -369,7 +369,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#FDE2B3',
     borderColor: colors.black_color6,
     padding: 10,
-    elevation:10,
+    elevation: 10,
     marginBottom: height * 0.02,
   },
   checkBoxText: {
