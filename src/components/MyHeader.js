@@ -17,10 +17,12 @@ import { openFacebook, openInstagram, openYoutube } from './Methods';
 import RNFetchBlob from 'rn-fetch-blob';
 import axios from 'axios';
 import { Buffer } from 'buffer';
+import { useNavigation } from '@react-navigation/native';
 
 
 
-const MyHeader = ({ title,navigation, statusBar, socialIcons = false, download = false,id}) => {
+const MyHeader = ({ title, statusBar, socialIcons = false, download = false,navigation}) => {
+  
 
   return (
     <SafeAreaView

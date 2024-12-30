@@ -5,7 +5,8 @@ const initialState = {
     allpoojadata: null,
     bookPoojaData: null,
     bookpujaHistoryData: null,
-    isVisible: false
+    isVisible: false,
+    pujaDetails:null
 };
 const pooja = (state = initialState, action) => {
     const { type, payload } = action;
@@ -35,10 +36,20 @@ const pooja = (state = initialState, action) => {
                 ...state,
                 bookpujaHistoryData: payload
             }
+
+        case actionTypes.SET_PUJA_DETAILS:
+            return {
+                ...state,
+                pujaDetails: payload
+            }
+        
         case actionTypes.OPEN_MODAL:
             return { ...state, isVisible: true };
         case actionTypes.CLOSE_MODAL:
             return { ...state, isVisible: false };
+
+
+        
         default:
             return state;
     }

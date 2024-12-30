@@ -11,6 +11,7 @@ import {
 } from '@react-native-google-signin/google-signin';
 import { registerZegoCall } from '../../utils/zegoServices';
 import { Alert } from 'react-native';
+import { warnign_toast } from '../../components/MyToastMessage';
 
 
 
@@ -96,6 +97,8 @@ function* onOtpVerification(actions) {
             if (response?.type == 'home') {
                 yield call(resetToScreen, 'home')
                 yield registerZegoCall({userId:response?.customer?._id, userName: response?.customer?.customerName || 'Unknown', dispatch: payload?.dispatch})
+                warnign_toast("Thank you for login successfully");
+
             } else {
                 yield call(replace, response?.type)
             }

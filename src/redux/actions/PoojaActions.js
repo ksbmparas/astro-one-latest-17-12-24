@@ -42,6 +42,15 @@ export const setBookPoojaHistory = payload =>({
     payload
 })
 
+export const getPujaDetails = payload =>({
+    type : actionTypes.GET_PUJA_DETAILS,
+    payload
+})
+
+export const setPujaDetails = payload =>({
+    type : actionTypes.SET_PUJA_DETAILS,
+    payload
+})
 
 export const openModal = () => ({ type: actionTypes.OPEN_MODAL, });
 export const closeModal = () => ({ type: actionTypes.CLOSE_MODAL });

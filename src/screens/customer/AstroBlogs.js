@@ -19,7 +19,7 @@ import axios from 'axios';
 import MyLoader from '../../components/MyLoader';
 import moment from 'moment/moment';
 import { useTranslation } from 'react-i18next';
-import { useFocusEffect } from '@react-navigation/native';
+import { useFocusEffect, useNavigation } from '@react-navigation/native';
 import * as BlogActions from '../../redux/actions/BlogActions'
 import { connect } from 'react-redux';
 import { Sizes } from '../../assets/style';
@@ -30,7 +30,7 @@ import { Colors, SCREEN_HEIGHT, SCREEN_WIDTH } from '../../config/Screen';
 
 const { width, height } = Dimensions.get('screen');
 
-const AstroBlogs = ({ navigation, dispatch, astroBlogData ,}) => {
+const AstroBlogs = ({  dispatch, astroBlogData, navigation, onPress}) => {
   console.log(astroBlogData)
   const { t } = useTranslation();
   const [isLoading, setIsLoading] = useState(false);
@@ -55,8 +55,9 @@ const AstroBlogs = ({ navigation, dispatch, astroBlogData ,}) => {
         backgroundColor={colors.background_theme2}
         barStyle="light-content"
       />
-      {/* <HomeHeader navigation={navigation} /> */}
-      <MyHeader title={'Blogs'} navigation={navigation} />
+      <HomeHeader navigation={navigation} />
+      {/* <MyHeader title={'Blogs'} navigation={navigation} /> */}
+
       <MyLoader isVisible={isLoading} />
      { Logos()}
       <FlatList ListHeaderComponent={<>

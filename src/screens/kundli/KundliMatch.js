@@ -28,13 +28,15 @@ import { connect } from 'react-redux';
 import * as KundliActions from '../../redux/actions/KundliActions'
 import MyHeader from '../../components/MyHeader';
 import { mainlogo } from '../../assets/images/Images';
+import DeviceInfo from 'react-native-device-info';
+
 
 const { width, height } = Dimensions.get('screen');
 
 const KundliMatch = ({ navigation, matchingAshtakootPointsData, maleKundliData, femaleKundliData, dispatch }) => {
   const { t } = useTranslation();
   const [modalVisible, setModalVisible] = useState(false);
-    console.log(matchingAshtakootPointsData?.total?.received_points,'alldata')
+  console.log(matchingAshtakootPointsData?.total?.received_points, 'alldata')
   const ref = useRef();
 
   useEffect(() => {
@@ -125,21 +127,34 @@ const KundliMatch = ({ navigation, matchingAshtakootPointsData, maleKundliData, 
                 size={25}
               />
             </TouchableOpacity>
+
           </View>
         </SafeAreaView>
       ),
     });
-    
+
   }, []);
 
   const share_matching = async () => {
     setModalVisible(false);
     ref.current.capture().then(uri => {
       console.log(uri);
+
+      const appName = DeviceInfo.getAppName();  
+      const appVersion = DeviceInfo.getVersion();  
+      const appLink = 'https://play.google.com/store/apps/details?id=com.example.app'; 
+
+      // Create the message with app details
+      const appDetailsMessage = `Check out the AstroOne marriage compatibility report for Ranjeet and etc.        
+        App: ${appName}
+        Version: ${appVersion}
+        Download the app here: ${appLink}`;
+
       let options = {
-        title:
-          'Checkout the AstroOne marriage compatibility report for Ranjeet and xxx.',
+        title:'Checkout the AstroOne marriage compatibility report for Ranjeet and etc.',
         url: uri,
+        message: appDetailsMessage,
+        subject: 'AstroOne Compatibility Report',
       };
       Share.open(options)
         .then(res => {
@@ -153,7 +168,7 @@ const KundliMatch = ({ navigation, matchingAshtakootPointsData, maleKundliData, 
 
   return (
     <View style={{ flex: 1, backgroundColor: colors.black_color1 }}>
-      
+
       <ScrollView showsVerticalScrollIndicator={false}>
         <View
           style={{
@@ -508,7 +523,7 @@ const KundliMatch = ({ navigation, matchingAshtakootPointsData, maleKundliData, 
                 color: colors.black_color,
                 fontFamily: fonts.medium,
               }}>
-                    AstroOne Conclusion
+              AstroOne Conclusion
             </Text>
             <View style={{ flex: 1, marginTop: 10 }}>
               <Text allowFontScaling={false}
@@ -517,7 +532,7 @@ const KundliMatch = ({ navigation, matchingAshtakootPointsData, maleKundliData, 
                   color: colors.black_color,
                   fontFamily: fonts.semi_bold,
                 }}>
-                {matchingAshtakootPointsData?.conclusion?.report}
+                {/* {matchingAshtakootPointsData?.conclusion?.report} */}
               </Text>
             </View>
             {/* <TouchableOpacity
@@ -739,7 +754,7 @@ const KundliMatch = ({ navigation, matchingAshtakootPointsData, maleKundliData, 
                   fontFamily: fonts.bold,
                   textAlign: 'center',
                 }}>
-                    AstroOne Conclusion
+                AstroOne Conclusion
               </Text>
               <Text allowFontScaling={false}
                 style={{
@@ -775,6 +790,7 @@ const KundliMatch = ({ navigation, matchingAshtakootPointsData, maleKundliData, 
             {t("share")}
           </Text>
         </TouchableOpacity>
+
       </Modal>
     </View>
   );

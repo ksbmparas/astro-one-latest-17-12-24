@@ -1088,14 +1088,7 @@ const Home = ({
     );
   }
 
-
-
-
-
   function visittemple({ liveTempleData }) {
-
-    console.log("video linke", liveTempleData?.VideoLink);
-
 
     const renderItem = ({ item }) => (
 
@@ -1122,7 +1115,7 @@ const Home = ({
           <WebView
             source={{ uri: item?.VideoLink }}
             style={{
-              height: 270,  // Adjust based on the desired video size
+              height: 270,  
               marginBottom: 30
             }}
             javaScriptEnabled={true}
@@ -1167,13 +1160,6 @@ const Home = ({
       </View>
     );
   }
-
-
-
-
-
-
-
 
   function analysis() {
     const data = [
