@@ -148,7 +148,7 @@ const Sanatan = ({ sanatangif, dispatch, getbaghwandata, getcategorydata, mudrad
         }, 2000);
 
     }
-    const [activeCategoryId, setActiveCategoryId] = useState(getcategorydata && getcategorydata.length > 0 ? getcategorydata[0]._id : null);
+    const [activeCategoryId, setActiveCategoryId] = useState(getcategorydata && getcategorydata?.length > 0 ? getcategorydata[0]._id : null);
     const [flowerImage, setFlowerImage] = useState();
     const foolArpan = (itemName, payment, itemPrice, itemImage) => {
         setFlowerImage(itemImage)
@@ -211,18 +211,18 @@ const Sanatan = ({ sanatangif, dispatch, getbaghwandata, getcategorydata, mudrad
             if (state === 4) {
                 if (translationY < -30) {
                     setVisibleIndex((prevIndex) => {
-                        const newIndex = prevIndex < images.length - 1 ? prevIndex + 1 : 0;
+                        const newIndex = prevIndex < images?.length - 1 ? prevIndex + 1 : 0;
                         return newIndex;
                     });
                 } else if (translationY > 30) {
                     setVisibleIndex((prevIndex) => {
-                        const newIndex = prevIndex > 0 ? prevIndex - 1 : images.length - 1;
+                        const newIndex = prevIndex > 0 ? prevIndex - 1 : images?.length - 1;
                         return newIndex;
                     });
                 }
             }
         },
-        [images.length]
+        [images?.length]
     );
 
     useEffect(() => {
@@ -234,7 +234,7 @@ const Sanatan = ({ sanatangif, dispatch, getbaghwandata, getcategorydata, mudrad
         setSelectedImages(item.bulkImageUpload);
     };
     useEffect(() => {
-        if (getbaghwandata.length > 0) {
+        if (getbaghwandata?.length > 0) {
           handleItemPress(getbaghwandata[0]);  
         }
       }, [getbaghwandata]);
