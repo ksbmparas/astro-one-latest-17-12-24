@@ -1093,69 +1093,93 @@ const Home = ({
 
 
   function visittemple({ liveTempleData }) {
-
-    console.log("video linke", liveTempleData?.VideoLink);
-
-
-    const renderItem = ({ item }) => (
-
-      <View
-        style={{
-          borderWidth: 0.5,
-          borderRadius: 10,
-          backgroundColor: 'white',
-          borderColor: 'gray',
-        }}>
-
+    // const SCREEN_WIDTH = 360; 
+    // const SCREEN_HEIGHT = 640; 
+  
+    const isLiveShowEnabled = (fromTime, toTime) => {
+      const currentTime = new Date();
+      const currentHour = currentTime.getHours();
+      const currentMinute = currentTime.getMinutes();
+  
+      const [fromHour, fromMinute] = fromTime.split(':').map(Number);
+      const [toHour, toMinute] = toTime.split(':').map(Number);
+  
+      const currentTimeInMinutes = currentHour * 60 + currentMinute;
+      const fromTimeInMinutes = fromHour * 60 + fromMinute;
+      const toTimeInMinutes = toHour * 60 + toMinute;
+  
+      return currentTimeInMinutes >= fromTimeInMinutes && currentTimeInMinutes <= toTimeInMinutes;
+    };
+  
+    const renderItem = ({ item }) => {
+      const { VideoLink, fromTimeOfArti, toTimeOfArti, TempleName, Description } = item;
+      const isLive = isLiveShowEnabled(fromTimeOfArti, toTimeOfArti);
+  
+      return (
         <View
           style={{
-            height: SCREEN_HEIGHT * 0.18,
-            width: SCREEN_WIDTH * 0.41,
+            borderWidth: 0.5,
+            borderRadius: 10,
+            backgroundColor: 'white',
+            borderColor: 'gray',
           }}>
-          <FastImage
+          <View
             style={{
-              width: SCREEN_WIDTH * 0.22,
-              height: SCREEN_WIDTH * 0.07,
-            }}
-            source={require('../../assets/gifs/live_gif.gif')}
-          />
-          <WebView
-            source={{ uri: item?.VideoLink }}
-            style={styles.webview}
-            javaScriptEnabled={true}
-            domStorageEnabled={true}
-          />
-
-
+              height: SCREEN_HEIGHT * 0.18,
+              width: SCREEN_WIDTH * 0.44,
+            }}>
+            <FastImage
+              style={{
+                width: SCREEN_WIDTH * 0.22,
+                height: SCREEN_WIDTH * 0.07,
+              }}
+              source={require('../../assets/gifs/live_gif.gif')}
+            />
+            {isLive ? (
+              <WebView
+                source={{ uri: VideoLink }}
+                style={{ flex: 1 }}
+                javaScriptEnabled={true}
+                domStorageEnabled={true}
+              />
+            ) : (
+              <Text style={{ textAlign: 'center', color: 'gray' }}>Live Show Disabled</Text>
+            )}
+          </View>
+  
+          <View style={{ padding: 10 }}>
+            <Text style={{ fontSize: 16, textAlign: 'center', fontWeight: 'bold' }}>{TempleName}</Text>
+            <Text
+              style={{
+                fontSize: 14,
+                textAlign: 'center',
+                width: SCREEN_WIDTH * 0.4,
+              }}
+              numberOfLines={1}
+              ellipsizeMode="tail">
+              {Description}
+            </Text>
+          </View>
         </View>
-
-
-        <View style={{ padding: 10 }}>
-          <Text style={{ ...Fonts.PoppinsRegular, textAlign: "center", fontWeight: "bold" }}>{item?.TempleName}</Text>
-          <Text style={{ ...Fonts.PoppinsRegular, textAlign: "center", width: SCREEN_WIDTH * 0.4 }}
-            numberOfLines={1} ellipsizeMode="tail"
-          >{item?.Description}</Text>
-        </View>
-
-
-      </View>
-    );
+      );
+    };
+  
     return (
-      <View style={styles.containerGap}>
-        <View style={styles.HeadingContainer}>
-          <Text style={styles.Heading}>Virtue of visiting famous temples</Text>
+      <View style={{ padding: 10 }}>
+        <View style={{ flexDirection: 'row', justifyContent: 'space-between', marginBottom: 20 }}>
+          <Text style={{ fontSize: 18, fontWeight: 'bold' }}>Virtue of visiting famous temples</Text>
           <Image
             source={require('../../assets/images/SanatanFlag.png')}
-            resizeMethod="contain"
+            resizeMode="contain"
             style={{ height: SCREEN_WIDTH * 0.08, width: SCREEN_WIDTH * 0.08 }}
           />
         </View>
-
+  
         <FlatList
           horizontal
           data={liveTempleData}
           renderItem={renderItem}
-          keyExtractor={item => item.id}
+          keyExtractor={item => item._id}
           contentContainerStyle={{
             flexDirection: 'row',
             gap: 10,
