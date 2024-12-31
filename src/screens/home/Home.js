@@ -695,9 +695,9 @@ const Home = ({
   function banner() {
     return (
       <View
-        style={{ flexDirection: 'row', marginTop:-50 }}>
+        style={{ flexDirection: 'row', marginTop: -50 }}>
         <ScrollView horizontal={true} showsHorizontalScrollIndicator={false}>
-          <TouchableOpacity style={{ alignItems: 'center', marginRight:10 }}>
+          <TouchableOpacity style={{ alignItems: 'center', marginRight: 10 }}>
             <Image
               style={{
                 height: SCREEN_HEIGHT * 0.2,
@@ -709,7 +709,7 @@ const Home = ({
               source={require('../../assets/images/banner.png')}
             />
           </TouchableOpacity>
-          <TouchableOpacity style={{ alignItems: 'center', marginRight:10 }}>
+          <TouchableOpacity style={{ alignItems: 'center', marginRight: 10 }}>
             <Image
               style={{
                 height: SCREEN_HEIGHT * 0.2,
@@ -1338,7 +1338,7 @@ const Home = ({
             />
           </View>
 
-          <TouchableOpacity onPress={()=>navigation.navigate('BookPooja')}>
+          <TouchableOpacity onPress={() => navigation.navigate('NewPanchang')}>
             <Entypo name="calendar" color={'black'} size={20} />
           </TouchableOpacity>
         </View>
@@ -1467,7 +1467,13 @@ const Home = ({
                 backgroundColor: 'white',
                 marginRight: 10,
               }}
-              onPress={() => navigation.navigate(item.title)}>
+              onPress={() => {
+                if (item.title === 'E-Puja') {
+                  navigation.navigate('BookPooja', { itemId: item.id, title: item.title });
+                }
+              }}
+            >
+
               <View
                 style={{
                   height: SCREEN_HEIGHT * 0.2,
