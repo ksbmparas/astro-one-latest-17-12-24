@@ -5,6 +5,7 @@ import { colors, getFontSize } from '../config/Constants1';
 import { SCREEN_WIDTH } from '../config/Screen';
 import { connect, useDispatch, useSelector } from 'react-redux';
 import * as PoojaActions from '../redux/actions/PoojaActions'
+
 const PaymentModal = ({isVisible,dispatch,BookPujaData}) => {
     console.log("1111",BookPujaData)
     console.log("qqq0000",BookPujaData)

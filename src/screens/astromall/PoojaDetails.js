@@ -23,7 +23,7 @@ import PaymentModal from '../../Modal/PaymentModal'
 
 
 
-const PoojaDetails2 = ({ navigation, route, dispatch, customerData }) => {
+const PoojaDetails = ({ navigation, route, dispatch, customerData }) => {
     const Pooja = route?.params
     const [activeIndex, setActiveIndex] = useState(0);
     const [open, setOpen] = useState(false)
@@ -394,12 +394,12 @@ const PoojaDetails2 = ({ navigation, route, dispatch, customerData }) => {
 const mapStateToProps = state => ({
     customerData: state.customer.customerData,
     poojaData: state.pooja.poojaData,
-    // newPoojaData: state.pooja.newPoojaData,
+    newPoojaData: state.pooja.newPoojaData,
     // bookpujaHistoryData: state.pooja.newPoojaData
 });
 const mapDispatchToProps = dispatch => ({ dispatch });
 
-export default connect(mapStateToProps, mapDispatchToProps)(PoojaDetails2);
+export default connect(mapStateToProps, mapDispatchToProps)(PoojaDetails);
 
 
 

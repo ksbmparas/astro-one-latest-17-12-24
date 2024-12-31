@@ -111,6 +111,9 @@ export const update_address_cart = 'ecommerce/update_address_cart';
 //puja
 export const get_puja_details = 'ecommerce/get_puja'
 
+//Gift
+export const get_gift = 'get-all-customers';
+
 // numerology
 export const delete_numerology = 'customers/delete_numero_data'
 export const get_numerology = 'customers/get_numerology'

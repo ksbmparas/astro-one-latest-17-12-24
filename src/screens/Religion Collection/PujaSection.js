@@ -60,6 +60,7 @@ const PujaSection = () => {
                         <View>
                             <BookVirtualPuja />
                             <DevotionalSongs />
+                            <Mahurat/>
                         </View>
                     }
                 />
@@ -103,6 +104,26 @@ const DevotionalSongs = () => {
                 <Image
                     style={{ height: SCREEN_HEIGHT * 0.24, width: SCREEN_WIDTH * 0.98, elevation: 1 }}
                     source={require('../../assets/images/newdesong.png')} />
+            </TouchableOpacity>
+
+        </View>
+    )
+}
+
+const Mahurat = () => {
+    const navigation = useNavigation()
+    return (
+        <View style={{ paddingHorizontal:SCREEN_WIDTH*0.02,paddingBottom:SCREEN_HEIGHT*0.05}}>
+            <View style={{ paddingVertical: SCREEN_HEIGHT * 0.01, flexDirection: "row", alignItems: "flex-end", gap: 5, marginBottom: responsiveScreenHeight(2) }}>
+                <Text style={{ color: colors.background_theme2, fontSize: 20, fontWeight: "bold", marginLeft: SCREEN_WIDTH * 0.01 }}>|</Text>
+                <Text style={{ color: "black", fontSize: 16, fontWeight: "bold" }}>Mahurat</Text>
+            </View>
+            <TouchableOpacity
+                  onPress={() => navigation.navigate('NewPanchang')}
+                style={{ alignItems: "center", borderRadius: 15, overflow: "hidden" }}>
+                <Image
+                    style={{ height: SCREEN_HEIGHT * 0.24, width: SCREEN_WIDTH * 0.98, elevation: 1 }}
+                    source={require('../../assets/images/mahurat.png')} />
             </TouchableOpacity>
 
         </View>

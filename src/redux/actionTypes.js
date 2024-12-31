@@ -376,3 +376,7 @@ export const SET_POOJA_CATEGORY = 'SET_POOJA_CATEGORY'
 //Book Puja
 export const GET_PUJA_DETAILS = 'GET_PUJA_DETAILS';
 export const SET_PUJA_DETAILS = 'SET_PUJA_DETAILS';
+
+//Gift
+export const GET_GIFT = 'GET_GIFT';
+export const SET_GIFT = 'SET_GIFT';
