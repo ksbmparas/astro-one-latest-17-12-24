@@ -1338,7 +1338,7 @@ const Home = ({
             />
           </View>
 
-          <TouchableOpacity>
+          <TouchableOpacity onPress={()=>navigation.navigate('BookPooja')}>
             <Entypo name="calendar" color={'black'} size={20} />
           </TouchableOpacity>
         </View>
