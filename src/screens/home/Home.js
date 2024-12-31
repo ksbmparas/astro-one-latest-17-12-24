@@ -695,9 +695,9 @@ const Home = ({
   function banner() {
     return (
       <View
-        style={{ flexDirection: 'row' }}>
+        style={{ flexDirection: 'row', marginTop:-50 }}>
         <ScrollView horizontal={true} showsHorizontalScrollIndicator={false}>
-          <TouchableOpacity style={{ alignItems: 'center' }}>
+          <TouchableOpacity style={{ alignItems: 'center', marginRight:10 }}>
             <Image
               style={{
                 height: SCREEN_HEIGHT * 0.2,
@@ -709,11 +709,11 @@ const Home = ({
               source={require('../../assets/images/banner.png')}
             />
           </TouchableOpacity>
-          <TouchableOpacity style={{ alignItems: 'center' }}>
+          <TouchableOpacity style={{ alignItems: 'center', marginRight:10 }}>
             <Image
               style={{
                 height: SCREEN_HEIGHT * 0.2,
-                width: SCREEN_WIDTH * 0.98,
+                width: SCREEN_WIDTH * 0.95,
                 elevation: 1,
                 resizeMode: 'contain',
 
@@ -725,7 +725,7 @@ const Home = ({
             <Image
               style={{
                 height: SCREEN_HEIGHT * 0.2,
-                width: SCREEN_WIDTH * 0.98,
+                width: SCREEN_WIDTH * 0.95,
                 elevation: 1,
                 resizeMode: 'contain',
               }}
