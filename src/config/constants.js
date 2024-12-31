@@ -108,6 +108,9 @@ export const get_address_cart = 'ecommerce/get_address_cart';
 export const delete_address_cart = 'ecommerce/delete_address_cart';
 export const update_address_cart = 'ecommerce/update_address_cart';
 
+//puja
+export const get_puja_details = 'ecommerce/get_puja'
+
 // numerology
 export const delete_numerology = 'customers/delete_numero_data'
 export const get_numerology = 'customers/get_numerology'

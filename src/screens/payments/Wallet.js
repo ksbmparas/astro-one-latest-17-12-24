@@ -96,9 +96,9 @@ const Wallet = ({ navigation, route, customerData, dispatch, rechargeOfferList }
         <ScrollView showsVerticalScrollIndicator={false}>
 
         <View style={{  marginTop: 5, }}>
-          <TouchableOpacity style={{ padding: 10, marginLeft: 300 }} onPress={() => navigation.navigate('walletHistroy')}>
+          {/* <TouchableOpacity style={{ padding: 10, marginLeft: 300 }} onPress={() => navigation.navigate('walletHistroy')}>
             <Text style={{ fontSize: 18, fontWeight: 800 }}>Wallet History</Text>
-          </TouchableOpacity>
+          </TouchableOpacity> */}
           </View>
           <View style={{alignItems:"center",paddingTop:SCREEN_HEIGHT*0.02}}>
             <Text style={{fontSize:18,color:colors.black_color8}}> MY BALANCE</Text>
@@ -164,6 +164,8 @@ const Wallet = ({ navigation, route, customerData, dispatch, rechargeOfferList }
             </TouchableOpacity>
 
           </View>
+
+          
 
           
           {imageData == '0' && (
@@ -256,6 +258,87 @@ const Wallet = ({ navigation, route, customerData, dispatch, rechargeOfferList }
                 </TouchableOpacity>
               ))}
           </View>
+
+          <View
+            style={{
+              width: '90%',
+              alignSelf: 'center',
+              flexDirection: 'row',
+              flexWrap: 'wrap',
+            }}>
+            {rechargeOfferList &&
+              rechargeOfferList.map((item, index) => (
+                <TouchableOpacity
+                  onPress={() => navigation.navigate('WalletGstAmount', { amount: item?.amount, rechargePlanId: item?._id })}
+                  key={index}
+                  style={{
+                    flex: 0,
+                    width: '40%',
+                    height: width * 0.18,
+                    justifyContent: 'center',
+                    alignItems: 'center',
+                    borderRadius: Sizes.fixPadding,
+                    backgroundColor: colors.background_theme1,
+                    marginHorizontal: '5%',
+                    marginBottom: '10%',
+                    overflow: 'hidden',
+                    elevation: 5,
+                    shadowColor: Colors.blackLight
+                  }}>
+                  <View style={styles.box1}>
+                    <Text allowFontScaling={false}
+                      style={
+                        styles.bannerText
+                      }>{`Extra ${item?.percentage}%`}</Text>
+                  </View>
+                  <Text allowFontScaling={false}
+                    style={{ ...Fonts.black16RobotoMedium, color: Colors.blackLight }}>
+                    ₹ {item?.amount}
+                  </Text>
+                </TouchableOpacity>
+              ))}
+          </View>
+
+          <View
+            style={{
+              width: '90%',
+              alignSelf: 'center',
+              flexDirection: 'row',
+              flexWrap: 'wrap',
+            }}>
+            {rechargeOfferList &&
+              rechargeOfferList.map((item, index) => (
+                <TouchableOpacity
+                  onPress={() => navigation.navigate('WalletGstAmount', { amount: item?.amount, rechargePlanId: item?._id })}
+                  key={index}
+                  style={{
+                    flex: 0,
+                    width: '40%',
+                    height: width * 0.18,
+                    justifyContent: 'center',
+                    alignItems: 'center',
+                    borderRadius: Sizes.fixPadding,
+                    backgroundColor: colors.background_theme1,
+                    marginHorizontal: '5%',
+                    marginBottom: '10%',
+                    overflow: 'hidden',
+                    elevation: 5,
+                    shadowColor: Colors.blackLight
+                  }}>
+                  <View style={styles.box1}>
+                    <Text allowFontScaling={false}
+                      style={
+                        styles.bannerText
+                      }>{`Extra ${item?.percentage}%`}</Text>
+                  </View>
+                  <Text allowFontScaling={false}
+                    style={{ ...Fonts.black16RobotoMedium, color: Colors.blackLight }}>
+                    ₹ {item?.amount}
+                  </Text>
+                </TouchableOpacity>
+              ))}
+          </View>
+          
         </ScrollView>
       </View>
 
