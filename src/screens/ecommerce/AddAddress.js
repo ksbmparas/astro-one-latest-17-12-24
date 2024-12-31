@@ -104,7 +104,6 @@ const AddAddress = ({ navigation, dispatch, customerData }) => {
                     <TextInput
                         style={{ ...styles.input, width: '49%' }}
                         placeholder="State"
-
                         value={state}
                         onChangeText={setState}
                         placeholderTextColor="#666"
