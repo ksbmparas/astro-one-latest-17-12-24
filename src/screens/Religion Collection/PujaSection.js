@@ -123,7 +123,7 @@ const Mahurat = () => {
                 style={{ alignItems: "center", borderRadius: 15, overflow: "hidden" }}>
                 <Image
                     style={{ height: SCREEN_HEIGHT * 0.24, width: SCREEN_WIDTH * 0.98, elevation: 1 }}
-                    source={require('../../assets/images/newdesong.png')} />
+                    source={require('../../assets/images/mahurat.png')} />
             </TouchableOpacity>
 
         </View>

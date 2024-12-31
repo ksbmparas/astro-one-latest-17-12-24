@@ -15,6 +15,8 @@ import {
 import { Sizes } from '../assets/style'
 import { goBack } from '../navigations/NavigationServices'
 import { Searchbar } from 'react-native-paper';
+import { connect } from 'react-redux'
+import * as GiftActions from "../redux/actions/GiftActions"
 
 
 const SendGifts = () => {
@@ -38,13 +40,21 @@ const SendGifts = () => {
     { id: '5', image: images.clove, title: 'Clove', prize: 21 },
     { id: '6', image: images.sweets, title: 'Sweets', prize: 21 },
   ];
+
+  // useEffect(()=>{
+  //   dispatch(GiftActions.getGifts())
+  // },[dispatch])
+
+  // console.log("check the gifts data:::::", giftsData);
+  
+
   const renderitem = ({ item }) => {
     return (
 
         <View style={{flex:1, padding:5}}>
           <View style={{flexDirection:"row", justifyContent:"space-between", alignItems:"center", borderWidth:0.3, paddingHorizontal:20, paddingVertical:10, borderRadius:10}}>
             {/* <Image
-              style={{ height: SCREEN_HEIGHT * 0.092, width: SCREEN_WIDTH * 0.19 }}
+              style={{ height: SCREEN_HEIGHT * 0.060, width: SCREEN_WIDTH * 0.10, resizeMode: 'contain' }}
               source={item.image} /> */}
             <View>
               <Text style={{ fontSize: 16, fontWeight: "500", color: "black" }}>Dcp Rana</Text>
@@ -57,8 +67,6 @@ const SendGifts = () => {
             </View>
           </View>
         </View>
-
-
     )
   }
   return (
@@ -135,7 +143,7 @@ const SendGifts = () => {
           placeholder="Search"
           onChangeText={setSearchQuery}
           value={searchQuery}
-          style={{backgroundColor:"white", borderWidth:0.2}}
+          style={{backgroundColor:"white", borderWidth:0.3}}
         />
       </View>
 
@@ -148,33 +156,12 @@ const SendGifts = () => {
               flex: 0,
               width: '100%',
               backgroundColor: colors.white_color,
-              // paddingTop: SCREEN_HEIGHT * 0.05
-
             }}>
-
-
             <FlatList
-
-              // numColumns={2}
-              // numColumns={1}
               data={DATA}
               renderItem={renderitem}
               keyExtractor={(item) => item.id}
-
             />
-
-
-
-
-
-
-
-
-
-
-
-
-
           </View>
         </View>
       ) : (
@@ -216,9 +203,6 @@ const SendGifts = () => {
           </View>
         </KeyboardAvoidingView>
       )}
-
-
-
     </View>
   )
   function NODATA() {
@@ -238,7 +222,8 @@ const SendGifts = () => {
   }
 }
 
-export default SendGifts
+export default SendGifts;
+
 
 const styles = StyleSheet.create({
   buttonContainer: {

@@ -1,7 +1,7 @@
 import { call, put, takeLatest, takeLeading } from 'redux-saga/effects';
 import { getRequest, postRequest } from '../../utils/apiRequests';
 import * as actionTypes from '../actionTypes';
-import { api_url, book_pooja, customer_home_banner, get_all_pooja_list, get_call_astrologer, get_chat_astrologer, get_new_pooja, get_pooja, get_puja_details, get_puja_history_data, get_video_call_astrologer } from '../../config/constants';
+import { api_url, book_pooja, customer_home_banner, get_all_pooja_list, get_call_astrologer, get_chat_astrologer, get_new_pooja, get_pooja, get_puja_details, get_puja_history_data, get_video_call_astrologer, phonepeWallet } from '../../config/constants';
 import { navigate } from '../../NavigationService';
 import { razorpayPayment } from '../../utils/razorpay';
 import { Alert } from 'react-native';
@@ -12,7 +12,7 @@ function* getHomeData(actions) {
         yield put({ type: actionTypes.SET_IS_LOADING, payload: true })
 
         const poojaDataResponse = yield getRequest({
-            url: api_url + get_puja,
+            url: api_url + get_puja_details,
         })
 
         console.log("222", poojaDataResponse)
@@ -76,23 +76,27 @@ function* getBookPooja(actions) {
         const { BookPujaData, customerData } = actions.payload
         yield put({ type: actionTypes.SET_IS_LOADING, payload: true })
         const bookedResponse = yield postRequest({
-            url: api_url + book_pooja,
+            // url: api_url + book_pooja,
+            url: api_url + phonepeWallet,
             data: BookPujaData
         })
         console.log("bookedResponse",bookedResponse)
         if (bookedResponse?.success) {
             yield put({ type: actionTypes.SET_BOOK_POOJA, payload: bookedResponse?.pooja })
-            Alert.alert("AstroRemedy","PoojaBooed....")
-            // const razorpayResponse = yield razorpayPayment({ amount: bookedResponse?.order?.price, email: customerData?.email, contact: customerData?.phoneNumber, name: customerData?.customerName })
-            // console.log("razrp", razorpayResponse)
-            // if (razorpayResponse) {
-            //     call(navigate, 'Home');
-            //     console.log("payment", "true");
-            // }
-            // yield put({ type: actionTypes.OPEN_MODAL });
-            // console.log("OPEN_MODAL",actionTypes.OPEN_MODAL )
+            Alert.alert("AstroOne","PoojaBooed....")
+            const razorpayResponse = yield razorpayPayment({ amount: bookedResponse?.order?.price, email: customerData?.email, contact: customerData?.phoneNumber, name: customerData?.customerName })
+            console.log("razrp", razorpayResponse)
+            if (razorpayResponse) {
+                call(navigate, 'Home');
+                console.log("payment", "true");
+            }
+            yield put({ type: actionTypes.OPEN_MODAL });
+            console.log("OPEN_MODAL",actionTypes.OPEN_MODAL )
+
+            console.log("check the respons:::", bookedResponse?.pooja);
+            
         } else {
-            Alert.alert("Astro Remedy", bookedResponse?.message);
+            Alert.alert("AstroOne", bookedResponse?.message);
         }
 
     } catch (e) {

@@ -27,7 +27,7 @@ const rootReducer = combineReducers({
   blogs,
   ecommerce,
   astromall,
-  pooja
+  pooja,
 });
 
 const appReducer = (state, action) => {
