@@ -67,6 +67,7 @@ const Navgrah = ({ sanatangif, dispatch, getbaghwandata, getcategorydata, mudrad
             }
         };
     }, []);
+   
     const playBellSound = () => {
         if (bellSound) {
             bellSound.play((success) => {
@@ -77,27 +78,46 @@ const Navgrah = ({ sanatangif, dispatch, getbaghwandata, getcategorydata, mudrad
                 }
             });
         }
-        if (!isSwinging) {
-            setIsSwinging(true);
-            Animated.sequence([
-                Animated.timing(rotateValue, {
-                    toValue: 1,
-                    duration: 500,
-                    useNativeDriver: true,
-                }),
-                Animated.timing(rotateValue, {
-                    toValue: -1,
-                    duration: 500,
-                    useNativeDriver: true,
-                }),
-
-            ]).start()
-        }
     };
-    const rotate = rotateValue.interpolate({
-        inputRange: [-1, 1],
-        outputRange: ['-20deg', '20deg'],
-    });
+    const [newBellSound, setNewBellSound] = useState(null);
+    const [showGifBell, setShowGifBell] = useState(false)
+    const [showImageBell, setShowImageBell] = useState(true)
+    const[showFlower, setShowFlower] = useState(false)
+    useEffect(() => {
+        const sound = new Sound(require('../../assets/audio/aartisound.mp3'), Sound.MAIN_BUNDLE, (error) => {
+            if (error) {
+                console.log('Error loading sound:', error);
+            }
+        });
+        setNewBellSound(sound);
+
+        return () => {
+            if (sound) {
+                sound.release();
+            }
+        };
+    }, []);
+    
+    const newPlayBellSound = () => {
+        if (newBellSound) {
+            newBellSound.play((success) => {
+                if (success) {
+                    console.log('Successfully played sound');
+                } else {
+                    console.log('Sound play failed');
+                }
+            });
+        }
+        setShowGifBell(true)
+        setShowImageBell(false)
+        setShowFlower(true)
+        setTimeout(()=>{
+            setShowGifBell(false)
+            setShowImageBell(true)
+            setShowFlower(false)
+        },13000)
+
+    };
     const translateY = useRef(new Animated.Value(-200)).current;
     useEffect(() => {
         Animated.loop(
@@ -152,7 +172,7 @@ const Navgrah = ({ sanatangif, dispatch, getbaghwandata, getcategorydata, mudrad
     const [flowerImage, setFlowerImage] = useState();
     const foolArpan = (itemName, payment, itemPrice, itemImage) => {
         setFlowerImage(itemImage)
-        
+
         const isAdd = payment === "add";
         const data = {
             userId: customerData?._id,
@@ -192,17 +212,16 @@ const Navgrah = ({ sanatangif, dispatch, getbaghwandata, getcategorydata, mudrad
         setLocalBalance((prevBalance) =>
             isAdd ? prevBalance + itemPrice : Math.max(prevBalance - itemPrice, 0)
         );
-       
+
         setTimeout(() => {
             setShowLottieMudra(false);
         }, 2000);
-        
+
 
     }
     const [selectedImages, setSelectedImages] = useState([]);
     const [visibleIndex, setVisibleIndex] = useState(0);
     const [images, setImages] = useState([]);
-    console.log("images:::>>",images)
     const onGestureEvent = useCallback(
         ({ nativeEvent }) => {
             // console.log("Gesture Event:", nativeEvent);
@@ -230,21 +249,22 @@ const Navgrah = ({ sanatangif, dispatch, getbaghwandata, getcategorydata, mudrad
         setImages(selectedImages);
     }, [selectedImages]);
     const handleItemPress = (item) => {
-        
+
         setSelectedImages(item.bulkImageUpload);
     };
     useEffect(() => {
         if (getbaghwandata?.length > 0) {
-          handleItemPress(getbaghwandata[0]);  
+            handleItemPress(getbaghwandata[0]);
         }
-      }, [getbaghwandata]);
+    }, [getbaghwandata]);
 
 
-//Thali
-const [myThali, setMyThali] = useState();
-console.log("myThali",myThali)
+    //Thali
+    const [myThali, setMyThali] = useState();
+    console.log("myThali", myThali)
     const renderItem = ({ item, index }) => (
         <View>
+            
             <TouchableOpacity
                 onPress={() => handleItemPress(item)}
                 style={[styles.UpperFlatlistImageContainer]}>
@@ -272,6 +292,21 @@ console.log("myThali",myThali)
     const [showShower, setShowShower] = useState(false);
     return (
         <GestureHandlerRootView>
+            {showFlower && (
+                <LottieView
+                    source={require('../../assets/lottie/flower.json')}
+                    autoPlay
+                    loop
+                    style={{
+                        position: 'absolute',
+                        top: -80,
+                        zIndex: 9999,
+                        width: SCREEN_WIDTH,
+                        height: SCREEN_HEIGHT,
+                    }}
+                />
+            )}
+           
             {showShower && (
                 <View style={{ position: "absolute", top: 0 }}>
                     <Animated.Image
@@ -357,49 +392,64 @@ console.log("myThali",myThali)
                             style={{
                                 position: "absolute",
                                 top: SCREEN_HEIGHT * 0.35,
-                                left: SCREEN_WIDTH * 0.22,
-                                zIndex: 9999,
+                                left:showGifBell? SCREEN_WIDTH * 0.1:SCREEN_WIDTH * 0.22,
                             }}
                         >
-                            <Animated.View
-                                style={{
-                                    transform: [{ rotate }],
-                                }}
-                            >
-                                <Image source={require('../../assets/images/Bell.png')}
+                            {showGifBell && (
+                                <FastImage
                                     style={{
-                                        height: SCREEN_HEIGHT * 0.14,
-                                        width: SCREEN_WIDTH * 0.1,
-
+                                        height: SCREEN_HEIGHT * 0.19,
+                                        width: SCREEN_WIDTH * 0.3,
                                     }}
+                                    source={require('../../assets/gifs/bell.gif')}
+                                    resizeMode={FastImage.resizeMode.cover}
                                 />
-                            </Animated.View>
+                            )}
+                            {showImageBell && (
+                                <Image source={require('../../assets/gifs/bbbell.png')}
+                                style={{
+                                    height: SCREEN_HEIGHT * 0.12,
+                                    width: SCREEN_WIDTH * 0.1,
+                                    objectFit: "contain"
+
+                                }}
+                            />
+
+                            )}
+                           
                         </TouchableOpacity>
 
                         <TouchableOpacity onPress={playBellSound}
                             style={{
                                 position: "absolute",
                                 top: SCREEN_HEIGHT * 0.35,
-                                right: SCREEN_WIDTH * 0.22,
-                                zIndex: 99999,
+                                right: showGifBell? SCREEN_WIDTH * 0.1:SCREEN_WIDTH * 0.22,
                             }}
                         >
-                            <Animated.View
-                                style={{
-                                    transform: [{ rotate }],
-                                }}
-                            >
-                                <Image source={require('../../assets/images/Bell.png')}
+                             {showGifBell && (
+                                <FastImage
                                     style={{
-                                        height: SCREEN_HEIGHT * 0.14,
-                                        width: SCREEN_WIDTH * 0.1,
-
+                                        height: SCREEN_HEIGHT * 0.19,
+                                        width: SCREEN_WIDTH * 0.3,
                                     }}
+                                    source={require('../../assets/gifs/bell.gif')}
+                                    resizeMode={FastImage.resizeMode.cover}
                                 />
-                            </Animated.View>
+                            )}
+                            {showImageBell && (
+                                <Image source={require('../../assets/gifs/bbbell.png')}
+                                style={{
+                                    height: SCREEN_HEIGHT * 0.12,
+                                    width: SCREEN_WIDTH * 0.1,
+                                    objectFit: "contain"
+
+                                }}
+                            />
+
+                            )}
                         </TouchableOpacity>
                     </View>
-                    <View style={{ display: "flex", alignItems: "center", flexDirection: "row", justifyContent: "space-between", paddingHorizontal: 10, paddingVertical: 10, }}>
+                    <View style={{zIndex:9999999, display: "flex", alignItems: "center", flexDirection: "row", justifyContent: "space-between", paddingHorizontal: 10, paddingVertical: 10, }}>
                         <View>
                             <TouchableOpacity onPress={() => navigation.goBack()}>
                                 <Ionicons name="chevron-back" size={30} color="#fff" />
@@ -487,11 +537,11 @@ console.log("myThali",myThali)
 
                     >
                         <Image
-                         source={myThali ? { uri: new_img_url + myThali } : require('../../assets/images/AARTITHALI.png')}
-                         style={styles.thali} />
+                            source={myThali ? { uri: new_img_url + myThali } : require('../../assets/images/AARTITHALI.png')}
+                            style={styles.thali} />
                     </TouchableOpacity>
 
-                   
+
                     <View style={{ position: "absolute", bottom: SCREEN_HEIGHT * 0.16, left: SCREEN_WIDTH * 0.03, display: "flex", flexDirection: "column", gap: 15 }}>
                         <TouchableOpacity
 
@@ -499,7 +549,9 @@ console.log("myThali",myThali)
                                 backgroundColor: "#fff",
                                 borderRadius: 100,
                             }}
-                            onPress={() => { console.log("askjdgb") }}
+                            onPress={() => {
+                                newPlayBellSound();
+                            }}
                         >
                             <Image source={require('../../assets/images/Diyasanatan.png')}
                                 style={{
@@ -576,9 +628,9 @@ console.log("myThali",myThali)
                                             styles.categoryTab,
                                             activeCategoryId === item._id && styles.activeTab,
                                         ]}
-                                        onPress={() =>{
-                                             setActiveCategoryId(item._id)
-                                            }}
+                                        onPress={() => {
+                                            setActiveCategoryId(item._id)
+                                        }}
                                     >
                                         <Text
                                             style={[
@@ -601,15 +653,15 @@ console.log("myThali",myThali)
                                     <View style={styles.itemContainer}>
                                         <TouchableOpacity
                                             onPress={() => {
-                                                console.log("itemName",item?.title)
-                                                if(item?.title ==="THALI"){
+                                                console.log("itemName", item?.title)
+                                                if (item?.title === "THALI") {
                                                     thaliArpan(item?.itemName, item?.payment, item?.itemPrice, item?.itemImage);
-                                                }else{
+                                                } else {
                                                     foolArpan(item?.itemName, item?.payment, item?.itemPrice, item?.itemImage);
 
                                                 }
-                                                
-                                               
+
+
                                             }}
                                         >
 
@@ -877,7 +929,7 @@ const styles = StyleSheet.create({
     thali: {
         width: responsiveScreenWidth(58),
         height: responsiveScreenHeight(13),
-        objectFit:"contain"
+        objectFit: "contain"
     },
     thaliView: {
         position: "absolute",

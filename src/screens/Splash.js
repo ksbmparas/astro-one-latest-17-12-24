@@ -47,11 +47,12 @@ const Splash = ({ props, route, data, navigation, data1, dispatch }) => {
       dispatch(SettingActions.getSplash(dispatch))
       socketServices.initializeSocket(dispatch);
 
-    }, 1000);
+    }, 10000);
   }, []);
 
   const get_is_request_active = async () => {
     try {
+
       const value = await AsyncStorage.getItem('request');
       return value;
     } catch (error) {

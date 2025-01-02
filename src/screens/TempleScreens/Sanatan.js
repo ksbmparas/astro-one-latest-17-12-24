@@ -406,7 +406,7 @@ const Sanatan = ({ sanatangif, dispatch, getbaghwandata, getcategorydata, mudrad
                                 />
                             )}
                             {showImageBell && (
-                                <Image source={require('../../assets/gifs/bell.png')}
+                                <Image source={require('../../assets/gifs/bbbell.png')}
                                 style={{
                                     height: SCREEN_HEIGHT * 0.12,
                                     width: SCREEN_WIDTH * 0.1,
@@ -437,7 +437,7 @@ const Sanatan = ({ sanatangif, dispatch, getbaghwandata, getcategorydata, mudrad
                                 />
                             )}
                             {showImageBell && (
-                                <Image source={require('../../assets/gifs/bell.png')}
+                                <Image source={require('../../assets/gifs/bbbell.png')}
                                 style={{
                                     height: SCREEN_HEIGHT * 0.12,
                                     width: SCREEN_WIDTH * 0.1,
